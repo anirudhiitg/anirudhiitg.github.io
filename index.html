@@ -1,0 +1,2019 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ChatGPT Apps (Connectors) Ecosystem</title>
+  <style>
+    
+    :root {
+      --bg:#f6f7fb;
+      --panel:#ffffff;
+      --panel2:#f1f3f9;
+      --text:#0f172a;
+      --muted:#475569;
+      --border:rgba(15,23,42,.12);
+      --shadow: 0 18px 45px rgba(15,23,42,.12);
+      --chip: rgba(15,23,42,.06);
+      --chipHover: rgba(15,23,42,.12);
+      --accent:#2563eb;
+      --openai-bg: rgba(16,185,129,.08);
+      --openai-border: rgba(16,185,129,.25);
+      --openai-chip-bg: rgba(16,185,129,.12);
+      --openai-chip-hover: rgba(16,185,129,.18);
+      --openai-hover-bg: rgba(16,185,129,.14);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 8%, rgba(37,99,235,.08), transparent 55%),
+        radial-gradient(900px 700px at 92% 18%, rgba(14,165,233,.08), transparent 55%),
+        var(--bg);
+    }
+    header{max-width:1240px;margin:0 auto;padding:22px 16px 8px}
+    h1{margin:0 0 6px;font-size:20px;letter-spacing:.2px}
+    .sub{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+    .toolbar{
+      max-width:1240px;margin:10px auto 0;padding:0 16px 14px;
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,1), rgba(241,243,249,1));
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:10px 12px;
+      display:flex;align-items:center;gap:10px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.18);
+     overflow: visible; }
+    label{font-size:12px;color:var(--muted);white-space:nowrap}
+    input[type="search"], select{
+      background: var(--panel);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:9px 10px;
+      border-radius:10px;
+      outline:none;
+      font-size:13px;
+    }
+    input[type="search"]{width:min(360px, 78vw)}
+    button{
+      background: var(--panel);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:9px 10px;
+      border-radius:10px;
+      font-size:13px;
+      cursor:pointer;
+    }
+    button:hover{border-color:rgba(255,255,255,.25)}
+    .pill{
+      display:flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid var(--border);
+      background: var(--panel2);
+      font-size:13px; color:var(--muted);
+    }
+    .pill input{accent-color: var(--accent)}
+    main{max-width:1240px;margin:0 auto;padding:0 16px 26px}
+    .wrap{
+      border:1px solid var(--border);
+      border-radius:16px;
+      overflow:hidden;
+      background:rgba(0,0,0,.16);
+      box-shadow: var(--shadow);
+    }
+    table{width:100%;border-collapse:separate;border-spacing:0}
+    thead th{
+      position:sticky;top:0;z-index:4;
+      background:linear-gradient(180deg, #ffffff, #f1f3f9);
+      border-bottom:1px solid var(--border);
+      padding:12px 10px;text-align:left;
+      font-size:12px;color:var(--muted);white-space:nowrap;
+    }
+    thead th:first-child{left:0;z-index:5;position:sticky}
+    tbody th{
+      position:sticky;left:0;z-index:3;
+      background:linear-gradient(180deg, #ffffff, #f1f3f9);
+      border-right:1px solid var(--border);
+      padding:12px 10px;
+      font-size:12px;color:var(--muted);white-space:nowrap;min-width:170px;
+    }
+    td{
+      position:relative;
+border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:10px;vertical-align:top;min-width:200px;
+      background:transparent;
+      transition: background 120ms ease, box-shadow 120ms ease;
+    }
+    tr:last-child td, tr:last-child th{border-bottom:none}
+    td:last-child, th:last-child{border-right:none}
+    .cellTop{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+    .hdrCount{font-size:11px;color:var(--muted);padding:2px 8px;border:1px solid var(--border);border-radius:999px;background:rgba(0,0,0,.04);white-space:nowrap;}
+.hdrCount strong{color:var(--text);font-weight:600;}
+.count{
+      font-size:11px;color:var(--muted);
+      padding:2px 8px;border:1px solid var(--border);
+      border-radius:999px;background: var(--panel2);white-space:nowrap;
+    }
+    .legendDot{width:8px;height:8px;border-radius:999px;display:inline-block;margin-right:6px;flex:none}
+    .chips{display:flex;flex-wrap:wrap;gap:6px}
+    .cellBadge{
+      position:absolute;
+      top:6px; right:6px;
+      font-size:11px; line-height:1;
+      padding:2px 6px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background: rgba(0,0,0,.04);
+      color: var(--muted);
+      user-select:none;
+      pointer-events:none;
+    }
+
+    .chip{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:5px 8px;border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--chip);
+      font-size:12px;cursor:pointer;user-select:none;
+    }
+    .chip:hover{background:var(--chipHover)}
+    .chip.hide{display:none}
+    .chip.openai-app{
+      background:var(--openai-chip-bg);
+      border-color:var(--openai-border);
+    }
+    .chip.openai-app:hover{
+      background:var(--openai-chip-hover);
+    }
+    .empty{color:rgba(233,237,255,.45);font-size:12px}
+    .footer{
+      margin-top:10px;color:var(--muted);font-size:12px;
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    }
+    dialog{
+      width:min(720px, 94vw);
+      border:none;border-radius:16px;padding:0;
+      background: var(--panel);
+      color:var(--text);
+      box-shadow: 0 20px 60px rgba(15,23,42,.18);
+    }
+    dialog::backdrop{background: rgba(15,23,42,.25); backdrop-filter: blur(3px)}
+    .modalHead{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .modalHead h2{margin:0;font-size:16px}
+    .modalBody{padding:14px 16px 16px}
+    .kv{display:grid;grid-template-columns:120px 1fr;gap:8px 12px;font-size:13px;line-height:1.45}
+    .k{color:var(--muted)}
+    .hint{margin-top:10px;font-size:12px;color:var(--muted)}
+  
+    .scroll{
+      overflow:auto;
+      max-width:100%;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    /* Ensure there is always something to scroll horizontally when needed */
+    table{ min-width: 1100px; }
+
+  
+    /* Multi-select (checkbox dropdown) */
+    .ms{ position:relative; min-width: 220px; box-sizing: border-box; }
+    .msBtn{
+      width: 100%;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      background: var(--panel);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:9px 10px;
+      border-radius:10px;
+      outline:none;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .msBtn:focus{ box-shadow: 0 0 0 3px rgba(37,99,235,.18); border-color: rgba(37,99,235,.45); }
+    .msBadge{
+      font-size:11px; color:var(--muted);
+      padding:2px 8px; border:1px solid var(--border);
+      border-radius:999px; background: rgba(0,0,0,.04);
+      white-space:nowrap;
+    }
+    .msPanel{
+
+      position:absolute; top: calc(100% + 8px); left:0; right:0;
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius:12px;
+      box-shadow: 0 18px 45px rgba(15,23,42,.12);
+      padding:10px;
+      z-index: 9999;
+      display:none;
+      max-height: 280px;
+      overflow:auto;
+      overflow-x:hidden;
+      min-width: 320px;
+     box-sizing: border-box; }
+    .ms.open .msPanel{
+ display:block; }
+    .msRow{
+      display:flex; align-items:center; gap:8px;
+      padding:6px 8px;
+      border-radius:10px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .msRow:hover{ background: var(--panel2); }
+    .msRow input{ accent-color: var(--accent); }
+    .msTools{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      padding:6px 4px 10px;
+      border-bottom:1px solid var(--border);
+      margin-bottom:8px;
+    }
+    .msTools .msSearch{
+      flex:1 1 200px;
+      min-width: 180px;
+    }
+    .msTools button{
+      padding:6px 8px;
+      border-radius:10px;
+      font-size:12px;
+      white-space: nowrap;
+    }
+    .msSearch{
+      width: 100%;
+      min-width: 0;
+      background: var(--panel2);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:7px 10px;
+      border-radius:10px;
+      outline:none;
+      font-size:12px;
+    }
+
+  
+    /* View toggle (Matrix/List/Timeline) */
+    #viewToggle{ display:flex; gap:8px; align-items:center; }
+    #viewToggle .pillLabel{ font-size:12px; color:var(--muted); margin-right:4px; }
+    .seg{
+      padding:7px 10px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      cursor:pointer;
+      font-size:12px;
+    }
+    .seg.active{
+      border-color: rgba(37,99,235,.55);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.16);
+    }
+
+    /* List view */
+    .view[hidden]{ display:none !important; }
+    .listGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+      margin-top: 10px;
+    }
+    .qb{ display:flex; flex-direction:column; gap:10px; }
+    .qbRow{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .qbRow input{
+      flex:1 1 420px;
+      min-width: 240px;
+      background: var(--panel);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:9px 10px;
+      border-radius:10px;
+      outline:none;
+      font-size:13px;
+    }
+    .qbHelp{ font-size:12px; color:var(--muted); line-height:1.35; }
+    .qbRow2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      align-items:start;
+    }
+    @media (max-width: 820px){
+      .qbRow2{ grid-template-columns: 1fr; }
+    }
+    .smallLabel{ font-size:12px; color:var(--muted); margin-bottom:6px; }
+
+    .results{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height: 68vh;
+      overflow:auto;
+      padding-right: 4px;
+    }
+    .rItem{
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      background: var(--panel);
+      cursor:pointer;
+    }
+    .rTop{ display:flex; justify-content:space-between; gap:10px; align-items:baseline; }
+    .rName{ font-weight:650; }
+    .rCat{ color:var(--muted); font-size:12px; white-space:nowrap; }
+    .rCaps{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .capTag{
+      font-size:11px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: var(--panel2);
+    }
+    .rNote{ margin-top:8px; color:var(--muted); font-size:12px; line-height:1.35; }
+
+  
+    /* Keep view toggle on top row; matrix filters live below it */
+    #viewToggle{ order:0; width:100%; justify-content:flex-start; }
+    #matrixFiltersBlock{ order:1; width:100%; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+
+  
+    /* Robust hiding of matrix-only filters in List view */
+    body.listMode #matrixFiltersBlock{ display:none !important; }
+
+  
+    /* Simpler list view: wider container, single-column cards */
+    #listView{
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #listView .listGrid{
+      grid-template-columns: 1fr;
+    }
+    .rItem{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .rTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+    .rCaps{
+      flex-wrap:wrap;
+    }
+
+  
+    /* List view improvements */
+    #listView{ max-width: 1400px; margin: 0 auto; padding: 0 10px; }
+    #listView .listGrid{ grid-template-columns: 1fr; }
+    #listView .card{ width: 100%; }
+
+    /* Results header (sticky) */
+    .listHeader{
+      position: sticky;
+      top: 10px;
+      z-index: 5;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+      box-shadow: 0 10px 25px rgba(15,23,42,.06);
+    }
+    .listHeader .count{
+      font-weight: 800;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .listHeader .lsSearch{
+      flex: 1 1 420px;
+      max-width: 520px;
+      min-width: 220px;
+      background: var(--panel2);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:12px;
+      outline:none;
+      font-size:13px;
+    }
+
+    /* Timeline view */
+    #timelineView{ max-width: 1400px; margin: 0 auto; padding: 0 10px; }
+    .timelineContainer{
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: 72vh;
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .timelineYear{
+      margin-top: 32px;
+      margin-bottom: 16px;
+    }
+    .timelineYear:first-child{
+      margin-top: 8px;
+    }
+    .yearLabel{
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(37,99,235,.08), rgba(37,99,235,.04));
+      border: 2px solid rgba(37,99,235,.25);
+      box-shadow: 0 2px 8px rgba(37,99,235,.12);
+      letter-spacing: 0.5px;
+    }
+    .timelineMonth{
+      margin-top: 24px;
+      margin-bottom: 12px;
+      padding-left: 14px;
+    }
+    .monthLabel{
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 10px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    .timelineApps{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+      padding-left: 28px;
+      padding-bottom: 8px;
+      border-left: 3px solid rgba(37,99,235,.2);
+      margin-left: 14px;
+    }
+    .timelineApp{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: var(--panel);
+      cursor: pointer;
+      transition: all 140ms ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+    .timelineApp:hover{
+      background: var(--panel2);
+      border-color: var(--accent);
+      box-shadow: 0 6px 16px rgba(37,99,235,.18);
+      transform: translateY(-2px);
+    }
+    .timelineApp.openai-app{
+      background: var(--openai-bg);
+      border-color: var(--openai-border);
+    }
+    .timelineApp.openai-app:hover{
+      background: var(--openai-hover-bg);
+      border-color: rgba(16,185,129,.35);
+      box-shadow: 0 6px 16px rgba(16,185,129,.25);
+    }
+    .tlAppHeader{
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .tlAppName{
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+    .tlAppDate{
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      font-weight: 500;
+    }
+    .tlAppCategory{
+      display: inline-block;
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      margin-bottom: 8px;
+    }
+    .tlAppCaps{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .tlCapTag{
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.03);
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* Row-style results */
+    .results{ max-height: 72vh; overflow:auto; padding-right: 4px; }
+    .rItem{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding:10px 12px;
+      background: var(--panel);
+      cursor:pointer;
+    }
+    .rItem:hover{ background: var(--panel2); }
+    .rItem.openai-app{
+      background: var(--openai-bg);
+      border-color: var(--openai-border);
+    }
+    .rItem.openai-app:hover{
+      background: var(--openai-hover-bg);
+    }
+    .rRow{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      width:100%;
+      min-width:0;
+    }
+    .rName{
+      font-weight: 750;
+      min-width: 180px;
+      max-width: 360px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rCat{
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .rCaps{
+      display:flex;
+      gap:6px;
+      flex:1 1 auto;
+      min-width:0;
+      overflow:hidden;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .capTag{
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.04);
+      white-space: nowrap;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>ChatGPT Apps (Connectors) Ecosystem</h1>
+</header>
+
+<section class="toolbar" id="matrixToolbar">
+
+<div id="helpBtnWrap" style="margin-left:auto; display:flex; align-items:center;">
+  <button id="helpBtn" type="button" style="
+    padding:10px 18px;
+    font-weight:700;
+    border-radius:999px;
+    background:#2563eb;
+    color:white;
+    border:1px solid rgba(255,255,255,0.25);
+    box-shadow:0 10px 24px rgba(37,99,235,0.35);
+    cursor:pointer;
+  ">❓ Help</button>
+</div>
+
+<div class="pill" role="group" aria-label="View toggle" id="viewToggle">
+    <span class="pillLabel">View</span>
+    <button id="viewMatrixBtn" type="button" class="seg active" aria-pressed="true">Matrix</button>
+    <button id="viewListBtn" type="button" class="seg" aria-pressed="false">List</button>
+    <button id="viewTimelineBtn" type="button" class="seg" aria-pressed="false">Timeline</button>
+  </div>
+  <div id="matrixFiltersBlock">
+  <div class="card">
+    <label for="q">Search apps</label>
+    <input id="q" type="search" placeholder="Type to filter (e.g., Drive, Zoho, Adobe)…" />
+  </div>
+
+  <div class="card">
+    <label>Capability row</label>
+    <div id="capFilter" class="ms" aria-label="Capability filter"></div>
+  </div>
+
+  <div class="card">
+    <label>Category column</label>
+    <div id="catFilter" class="ms" aria-label="Category filter"></div>
+  </div>
+<div class="pill">
+    <input id="focusToggle" type="checkbox" />
+    <label for="focusToggle">Focus results</label>
+  </div>
+  <div class="pill">
+    <input id="openaiToggle" type="checkbox" />
+    <label for="openaiToggle">OpenAI apps only</label>
+  </div>
+  <button id="exportBtn" type="button">Export visible apps (CSV)</button>
+  <button id="resetBtn" type="button">Reset</button>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+    <section id="matrixView" class="view">
+<div class="scroll" role="region" aria-label="Scrollable table" tabindex="0">
+    <table id="matrix" aria-label="Apps capability-category matrix">
+      <thead>
+        <tr id="headRow">
+          <th>Capability</th>
+        </tr>
+      </thead>
+      <tbody id="bodyRows"></tbody>
+    </table>
+    </div>
+</section>
+
+
+<section id="listView" class="view" hidden>
+  <div class="listGrid">
+    <div class="card">
+      <label>Capability query builder</label>
+      <div class="qb">
+        <div class="qbRow">
+          <input id="capQueryInput" type="text" placeholder='e.g. "sync and interactive but no writes"' />
+          <button id="applyQueryBtn" type="button">Apply</button>
+          <button id="clearQueryBtn" type="button">Clear</button>
+        </div>
+        <div class="qbHelp">
+          Include = must have <b>all</b> selected. Exclude = must have <b>none</b> selected.
+          Examples: “sync but no file search”, “sync and interactive and writes”, “sync and interactive but no writes”.
+        </div>
+        <div class="qbRow2">
+          <div>
+            <div class="smallLabel">Include capabilities (AND)</div>
+            <div id="includeCaps" class="ms" aria-label="Include capabilities"></div>
+          </div>
+          <div>
+            <div class="smallLabel">Exclude capabilities</div>
+            <div id="excludeCaps" class="ms" aria-label="Exclude capabilities"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="listHeader">
+        <div class="count"><span id="listCount">0</span> results</div>
+        <input id="listSearch" class="lsSearch" type="search" placeholder="Search results (name, category, notes)..." />
+        <div class="pill" style="margin-left: 12px;">
+          <input id="listOpenaiToggle" type="checkbox" />
+          <label for="listOpenaiToggle">OpenAI apps only</label>
+        </div>
+      </div>
+      <div id="listResults" class="results"></div>
+    </div>
+  </div>
+</section>
+
+
+<section id="timelineView" class="view" hidden>
+  <div class="listGrid">
+    <div class="card">
+      <div class="listHeader">
+        <div class="count"><span id="timelineCount">0</span> apps</div>
+        <input id="timelineSearch" class="lsSearch" type="search" placeholder="Search apps by name, category..." />
+        <div class="pill" style="margin-left: 12px;">
+          <input id="timelineOpenaiToggle" type="checkbox" />
+          <label for="timelineOpenaiToggle">OpenAI apps only</label>
+        </div>
+      </div>
+      <div id="timelineContainer" class="timelineContainer"></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="footer">
+    <div id="summary"></div>
+    <div>
+      <span>Tip: darker cells = more (visible) apps in that cell. </span>
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:var(--openai-bg);border:1px solid var(--openai-border);font-size:11px;margin-left:8px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:rgba(16,185,129,.6);"></span>
+        Green shade = OpenAI developed
+      </span>
+    </div>
+  </div>
+</main>
+
+<dialog id="modal">
+  <div class="modalHead">
+    <h2 id="modalTitle">App</h2>
+    <button id="closeModal" type="button">Close</button>
+  </div>
+  <div class="modalBody">
+    <div class="kv">
+      <div class="k">Category</div><div id="modalCategory"></div>
+      <div class="k">Capabilities</div><div id="modalCaps"></div>
+      <div class="k">Developer</div><div id="modalDeveloper"></div>
+      <div class="k">Release date</div><div id="modalReleaseDate"></div>
+      <div class="k">Description</div><div id="modalDesc"></div>
+      <div class="k">Documentation</div><div id="modalDocs"></div>
+      <div class="k">Microsoft Connector</div><div id="modalMSConnector"></div>
+      <div class="k">Showcase prompts</div><div id="modalShowcasePrompts"></div>
+      <div class="k">User verbatims</div><div id="modalVerbatims"></div>
+    </div>
+    <div class="hint">“None” means the app detail page didn’t list a capabilities row.</div>
+  </div>
+</dialog>
+
+<script>
+  const DATA = {"apps": [{"name": "Adobe Photoshop","category": "Design","capabilities": ["Interactive(API)"],"description": "Adobe Photoshop for ChatGPT simplifies photo editing for creators of any skill level, for free. Upload an image and easily remove the background, refine lighting and color or apply creative effects like motion blur, duotone and glitch. Intuitive controls let you adjust visuals to match your style while delivering high‑quality results. With one click, continue edits in Photoshop on the web or mobile. It’s ideal for profile photos, social posts or any image that needs quick, high‑quality enhancement.","verbatims": [],"documentation": "https://blog.adobe.com/en/publish/2025/12/10/edit-photoshop-chatgpt","microsoft_connector": "no","showcase_prompts": [{"prompt": "Make the people pop in my vacation photo","source": "https://blog.adobe.com/en/publish/2025/12/10/edit-photoshop-chatgpt"},{"prompt": "Blur the background","source": "https://blog.adobe.com/en/publish/2025/12/10/edit-photoshop-chatgpt"},{"prompt": "Add a vintage effect to the sky","source": "https://blog.adobe.com/en/publish/2025/12/10/edit-photoshop-chatgpt"},{"prompt": "Convert this to black-and-white and brighten faces","source": "https://blog.adobe.com/en/publish/2025/12/10/edit-photoshop-chatgpt"}],"developer": "Adobe","release_date": "2025-12-10"},{"name": "Airtable","category": "Productivity","capabilities": ["Interactive(API)","Writes(API)"],"description": "Bring your operational data and context into ChatGPT conversations to help you get tasks done faster. Use your Airtable data as input to tasks (for example, building a landing page) and quickly update tasks or fields across records without leaving the chat.","verbatims": [{"text": "“I really appreciate how Airtable makes it easy to build something more than a vanilla spreadsheet… it gives me flexibility without jumping into full database dev.”","source": "G2 review (Nov 14, 2025)","url": "https://www.g2.com/products/airtable/reviews"}],"documentation": "https://www.airtable.com/integrations/chatgpt","microsoft_connector": "no","showcase_prompts": [{"prompt": "Generate landing pages using data from your roadmap","source": "https://www.airtable.com/integrations/chatgpt"},{"prompt": "Update deliverable statuses based on meeting notes","source": "https://www.airtable.com/integrations/chatgpt"},{"prompt": "Write pre-meeting summaries based on Airtable data","source": "https://www.airtable.com/integrations/chatgpt"}],"developer": "Airtable","release_date": "2025-12-18"},{"name": "Apple Music","category": "Entertainment","capabilities": ["Interactive(API)","Writes(API)"],"description": "Apple Music subscribers can ask ChatGPT to create playlists or find songs, albums and artists using natural language. ChatGPT handles finding the songs and adding them to a playlist rather than requiring manual searches.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Apple","release_date": "2025-12-17"},{"name": "Canva","category": "Design","capabilities": ["File Search(MCP)","Interactive(API)","Writes(API)"],"description": "Kick‑start the design process from chat. Ask Canva to create social posts, presentations, marketing materials or other visual assets based on your conversation; then continue editing in chat. You can resize designs for different channels, translate them into another language and open the design in Canva’s editor for final touches.","verbatims": [{"text": "“What I like best about Canva is how easy it makes design, even for non-designers like me.”","source": "G2 review","url": "https://www.g2.com/products/canva/reviews"}],"documentation": "https://www.canva.com/help/chatgpt-templates/","microsoft_connector": "no","showcase_prompts": [{"prompt": "Canva, create a logo for my bakery","source": "https://www.canva.com/help/chatgpt-templates/"},{"prompt": "Design an Instagram post for a sale","source": "https://www.canva.com/help/chatgpt-templates/"},{"prompt": "Canva, generate a newsletter template with a header space for a logo","source": "https://www.canva.com/help/chatgpt-templates/"},{"prompt": "Canva, create a pitch deck from this outline, and make it clean and tech-focused","source": "https://www.canva.com/help/chatgpt-templates/"}],"developer": "Canva","release_date": "2025-06-26"},{"name": "Figma","category": "Design","capabilities": ["Interactive(API)","Writes(API)"],"description": "The Figma app in ChatGPT generates beautifully designed assets, presentations and diagrams. Use it to turn conversations into social posts, digital ads, marketing assets and polished slide decks. It can also create flow charts, Gantt charts and other diagrams in FigJam; anything you create can be moved to Figma for editing, sharing and collaboration.","verbatims": [{"text": "“Figma is a modern wireframing solution… cloud based that you can access from anywhere.”","source": "G2 review","url": "https://www.g2.com/products/figma/reviews"},{"text": "“We want context to move freely between tools… without unnecessary rewrites or modification.”","source": "TechRadar Pro (Kris Rasmussen quote)","url": "https://www.techradar.com/pro/figma-is-making-its-ai-agents-smarter-and-more-connected-to-help-boost-your-designs"}],"documentation": "https://help.figma.com/hc/en-us/articles/35326636109975-Use-ChatGPT-with-Figma","microsoft_connector": "no","showcase_prompts": [{"prompt": "Figma, create a FigJam flowchart of a project timeline","source": "https://help.figma.com/hc/en-us/articles/35326636109975-Use-ChatGPT-with-Figma"},{"prompt": "Figma Slides, make a deck for my Q4 roadmap","source": "https://help.figma.com/hc/en-us/articles/35326636109975-Use-ChatGPT-with-Figma"},{"prompt": "Figma Buzz, design an Instagram post for product launch","source": "https://help.figma.com/hc/en-us/articles/35326636109975-Use-ChatGPT-with-Figma"}],"developer": "Figma","release_date": "2025-10-06"},{"name": "OpenTable","category": "Food","capabilities": ["Interactive(API)"],"description": "Every great meal starts with OpenTable. Discover and book the perfect table from over 60 000 restaurants worldwide—whether you’re planning ahead or booking last minute. Choose with confidence by sharing preferences for cuisine, price, ambiance and more to access personalized recommendations.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "OpenTable","release_date": "2023-03"},{"name": "Booking.com","category": "Travel","capabilities": ["Interactive(API)"],"description": "Millions of stays at your fingertips. From chic city hotels to cozy vacation rentals, the Booking.com app helps you find exactly what you’re looking for. Ask for specific property types, prices and amenities and receive lists of suitable hotels along with prices, photos, reviews and more. Tap “View on Booking.com” to see details and book your stay.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Booking.com","release_date": "2025-10-06"},{"name": "Expedia","category": "Travel","capabilities": ["Interactive(API)"],"description": "Bring your trip plans to life – get there, stay there and find things to see and do. The Expedia app allows you to use ChatGPT to ask about lodging, flights and activities and receive curated recommendations.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Expedia","release_date": "2025-10-06"},{"name": "Lovable","category": "Developer Tools","capabilities": ["Interactive(API)","Writes(API)"],"description": "Lovable is an AI software‑creation platform designed for people with no technical experience. It empowers anyone to turn their ideas into fully functional apps and websites in minutes—just describe what you want and Lovable builds and iterates with you like a world‑class engineer.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Lovable","release_date": "2025-12"},{"name": "Replit","category": "Developer Tools","capabilities": ["Interactive(API)","Writes(API)"],"description": "The Replit app lets you build real web or mobile apps simply by describing what you want in ChatGPT. Tell it your idea and the Replit Agent writes the code, sets everything up and shows a live version. You can continue improving the app by chatting—Replit handles building and updating while you provide input.","verbatims": [],"documentation": "https://docs.replit.com/getting-started/quickstarts/build-in-chatgpt","microsoft_connector": "no","showcase_prompts": [{"prompt": "Create a beautiful expense tracker app @Replit","source": "https://docs.replit.com/getting-started/quickstarts/build-in-chatgpt"}],"developer": "Replit","release_date": "2025-12-22"},{"name": "Spotify","category": "Entertainment","capabilities": ["Interactive(API)","Writes(API)"],"description": "Connect your Spotify account to ChatGPT and start listening your way. Ask for songs, playlists or podcasts and get personalized recommendations without leaving the chat.","verbatims": [],"documentation": "https://newsroom.spotify.com/2025-10-06/spotify-personalized-prompts-chatgpt/","microsoft_connector": "no","showcase_prompts": [{"prompt": "Spotify, make a playlist for my morning commute","source": "https://newsroom.spotify.com/2025-10-06/spotify-personalized-prompts-chatgpt/"}],"developer": "Spotify","release_date": "2025-10-06"},{"name": "Tripadvisor","category": "Travel","capabilities": ["Interactive(API)"],"description": "The Tripadvisor app brings trusted reviews and hotel insights into ChatGPT, offering a faster, more confident way to find the perfect place to stay. Explore top‑rated hotels on an interactive map, refine results through conversational follow‑ups, compare prices and amenities, and click out to booking partners or Tripadvisor for deeper research.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Tripadvisor","release_date": "2025-11"},{"name": "Adobe Acrobat","category": "Business","capabilities": ["Interactive(API)","Writes(API)"],"description": "Adobe Acrobat for ChatGPT lets you transform and organize PDF documents. Edit and merge pages, convert PDFs to Word or images, redact sensitive details and extract text with OCR. You can compress files, split documents and more, making it ideal for students and professionals who manage a lot of PDFs.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Adobe","release_date": "2025-12-10"},{"name": "Adobe Express","category": "Design","capabilities": ["Interactive(API)"],"description": "Create invitations, flyers and social posts quickly. Browse templates, personalize text and images, and when you need deeper controls, open your design in Adobe Express to edit it further.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Adobe","release_date": "2025-12-10"},{"name": "Aha!","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "*No description provided on the app page.*","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628380-aha-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize features in my Aha! roadmap","source": "https://help.openai.com/en/articles/12628380-aha-app-with-sync"},{"prompt": "Find initiatives scheduled for next quarter","source": "https://help.openai.com/en/articles/12628380-aha-app-with-sync"},{"prompt": "Draft a release summary from Aha! data","source": "https://help.openai.com/en/articles/12628380-aha-app-with-sync"}],"developer": "OpenAI","release_date": "2025-09"},{"name": "Agentforce Sales","category": "Business","capabilities": ["Interactive(API)","Writes(API)"],"description": "Use Salesforce with ChatGPT to get relevant CRM context for deals. Agentforce surfaces data for research, planning and closing faster, and enriches Salesforce with insights so sales teams can streamline their workflow.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Salesforce","release_date": "2025-12"},{"name": "Asana","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "Work with tasks, subtasks, comments and due dates to create summaries, understand priorities and prepare status updates. The Asana app helps you review upcoming work and activity and turn it into meeting‑ready briefs or progress reports.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628359-asana-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize overdue Asana tasks by project","source": "https://help.openai.com/en/articles/12628359-asana-app-with-sync"},{"prompt": "Find tasks assigned to me due this week","source": "https://help.openai.com/en/articles/12628359-asana-app-with-sync"},{"prompt": "Draft a status update from recent task comments","source": "https://help.openai.com/en/articles/12628359-asana-app-with-sync"}],"developer": "OpenAI","release_date": "2025-09"},{"name": "Atlassian Rovo","category": "Collaboration","capabilities": ["File Search(MCP)","Writes(API)"],"description": "The Atlassian Rovo MCP connector gives access to Jira, Confluence and Compass context within ChatGPT so you can summarize work items or pages, dig deeper using reasoning and research, create Jira issues directly and automate multi‑step actions such as generating or updating issues in bulk.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Atlassian","release_date": "2025-12"},{"name": "Azure Boards","category": "Developer Tools","capabilities": ["File Search(MCP)","Sync"],"description": "Connect Azure Boards to sync Azure DevOps work items and repositories for use in ChatGPT—making your development data accessible in conversations.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628387-azure-boards-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "List my open work items in Azure Boards","source": "https://help.openai.com/en/articles/12628387-azure-boards-app-with-sync"},{"prompt": "Summarize work items completed this sprint","source": "https://help.openai.com/en/articles/12628387-azure-boards-app-with-sync"},{"prompt": "Show bugs assigned to me in Azure DevOps","source": "https://help.openai.com/en/articles/12628387-azure-boards-app-with-sync"}],"developer": "OpenAI","release_date": "2025-09"},{"name": "Basecamp","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "The Basecamp app with sync lets ChatGPT securely access your team’s Basecamp projects and message boards as well as to‑dos and to‑do lists to answer questions. Once connected, ChatGPT automatically references Basecamp content when relevant.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628389-basecamp-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize recent updates across my Basecamp projects","source": "https://help.openai.com/en/articles/12628389-basecamp-app-with-sync"},{"prompt": "Find incomplete to-dos from this week","source": "https://help.openai.com/en/articles/12628389-basecamp-app-with-sync"},{"prompt": "Draft a project status update from Basecamp messages","source": "https://help.openai.com/en/articles/12628389-basecamp-app-with-sync"}],"developer": "OpenAI","release_date": "2025-09"},{"name": "Box","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "Work with documents, spreadsheets and presentations stored in Box to create concise summaries, pre‑reads or stakeholder updates. Pull details from multiple files, surface key points and draft clear outputs grounded in your team’s existing materials.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12368225-box-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize the key points from my Box presentations","source": "https://help.openai.com/en/articles/12368225-box-app-with-sync"},{"prompt": "Create an onboarding guide from Box documents","source": "https://help.openai.com/en/articles/12368225-box-app-with-sync"},{"prompt": "Draft a stakeholder brief using files in Box","source": "https://help.openai.com/en/articles/12368225-box-app-with-sync"}],"developer": "OpenAI","release_date": "2025-06-04"},{"name": "Clay","category": "Business","capabilities": ["Interactive(API)"],"description": "Prospect with Clay inside ChatGPT: run deep company and contact research without leaving your conversation. Use Clay’s contact databases, enrichment providers and AI agents to research target accounts, surface verified contact info and draft personalized outreach—all through chat.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Clay","release_date": "2025-10"},{"name": "Conductor","category": "Business","capabilities": ["None"],"description": "Analyze your brand’s AI presence and reputation. The Conductor app gives enterprise teams instant access to trusted AI search intelligence. Evaluate brand presence and sentiment, track market share, identify top mentions and citations, and empower marketing, PR and leadership teams to make faster, smarter decisions.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Conductor","release_date": "2025-11"},{"name": "Daloopa","category": "Finance","capabilities": ["None"],"description": "Daloopa’s MCP allows best‑in‑class fundamental data to be accessed by large language models. The connector lets LLMs query Daloopa’s vast database and retrieve structured data efficiently, helping clients save time and resources and generate actionable insights rather than incorrect data.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Daloopa","release_date": "2025-12"},{"name": "Egnyte","category": "Collaboration","capabilities": ["File Search(MCP)"],"description": "Find and work with files inside ChatGPT with Egnyte’s secure, permission‑based access. Use advanced search to locate files, summarize and manage workflows, download documents and collaborate seamlessly.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Egnyte","release_date": "2025-09"},{"name": "GitLab Issues","category": "Developer Tools","capabilities": ["File Search(MCP)","Sync"],"description": "Connect to sync GitLab issues and merge requests for use in ChatGPT—allowing you to reference and act on your development tasks within the chat.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628403-gitlab-synced-connector","microsoft_connector": "no","showcase_prompts": [{"prompt": "List open GitLab issues assigned to me","source": "https://help.openai.com/en/articles/12628403-gitlab-synced-connector"},{"prompt": "Summarize recent merge requests in my GitLab projects","source": "https://help.openai.com/en/articles/12628403-gitlab-synced-connector"},{"prompt": "Draft a sprint report from GitLab issues","source": "https://help.openai.com/en/articles/12628403-gitlab-synced-connector"}],"developer": "OpenAI","release_date": "2025-09"},{"name": "Google Drive","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "Work with your Google Drive documents—including Google Docs, Slides, PDFs and uploaded files—to create summaries, synthesize research, prepare updates or pull context into drafts. Combine information across several files to produce clear, structured content without switching between documents.","verbatims": [],"documentation": "https://help.openai.com/en/articles/10948259-synced-connectors-self-service-setup","microsoft_connector": "no","showcase_prompts": [{"prompt": "Draft an executive update using the latest info on project [x]","source": "https://help.openai.com/en/articles/12084614-connector-use-cases-and-prompts"},{"prompt": "Consolidate all the documents on [x] in Google Drive into a guide for new hires","source": "https://help.openai.com/en/articles/12084614-connector-use-cases-and-prompts"},{"prompt": "Find the latest pitch decks on [x] in my Google Drive","source": "https://help.openai.com/en/articles/12084614-connector-use-cases-and-prompts"},{"prompt": "Summarize the contents of my quarterly planning documents from Google Drive","source": "https://help.openai.com/en/articles/12084614-connector-use-cases-and-prompts"}],"developer": "OpenAI","release_date": "2025-06-04"},{"name": "Help Scout","category": "Collaboration","capabilities": ["File Search(MCP)","Sync"],"description": "The Help Scout app with sync lets ChatGPT securely access your team’s Help Scout conversations and threads, customers and mailboxes. Once connected, ChatGPT can reference Help Scout content to answer questions.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628422-help-scout-synced-connector","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize customer conversations from this week","source": "https://help.openai.com/en/articles/12628422-help-scout-synced-connector"},{"prompt": "Find common issues in Help Scout tickets","source": "https://help.openai.com/en/articles/12628422-help-scout-synced-connector"},{"prompt": "Draft a customer support summary from Help Scout","source": "https://help.openai.com/en/articles/12628422-help-scout-synced-connector"}],"developer": "OpenAI","release_date": "2025-09"},{"name": "Hex","category": "Business","capabilities": ["Interactive(API)","Writes(API)"],"description": "Answer data questions and spin up new analyses with the Hex Agent.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Hex","release_date": "2025-10"},{"name": "HighLevel","category": "Business","capabilities": ["File Search(MCP)","Writes(API)"],"description": "HighLevel gives agencies a unified CRM, automation and client‑communication platform. This connector brings HighLevel data—contacts, opportunities, appointments and conversations—into ChatGPT, turning raw records into summaries, next‑step recommendations and ready‑to‑use content. It helps analyze pipelines, qualify leads and prepare follow‑ups without leaving the chat.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "HighLevel","release_date": "2025-11"},{"name": "HubSpot","category": "Business","capabilities": ["File Search(MCP)"],"description": "Work with your HubSpot data to uncover patterns, prepare reports and answer questions about your pipeline or customer base. Explore which deals are closing soon, summarize ticket reasons, understand trends in lost deals or review key details before a meeting.","verbatims": [],"documentation": "https://www.hubspot.com/ai-tools/openai-connector","microsoft_connector": "no","showcase_prompts": [],"developer": "HubSpot","release_date": "2025-07-24"},{"name": "Hugging Face","category": "Developer Tools","capabilities": ["Writes(API)"],"description": "Connect to the Hugging Face Hub to explore models and datasets, access SDK documentation and more. Manage machine‑learning jobs and connect to thousands of AI applications via Spaces.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Hugging Face","release_date": "2025-11"},{"name": "Jotform","category": "Productivity","capabilities": ["Writes(API)"],"description": "Create and edit online forms, then access and analyze submissions directly in ChatGPT. Design forms through natural language, review incoming responses and generate insights or reports without leaving the chat.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Jotform","release_date": "2025-10"},{"name": "Klaviyo","category": "Business","capabilities": ["Writes(API)"],"description": "The Klaviyo app provides marketers with a daily pulse on campaign and flow performance within ChatGPT. It surfaces metrics such as sends, open rate, click rate, conversion rate and attributed revenue; offers plain‑language explanations; and lets users dive deeper into campaigns or flows and compare past performance. Marketers can stay informed, identify opportunities and implement updates using natural‑language prompts.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Klaviyo","release_date": "2025-11"},{"name": "Linear","category": "Developer Tools","capabilities": ["File Search(MCP)","Sync"],"description": "Use your Linear issues and comments to create clear status updates, identify themes in recent work or understand progress on a feature. Summarize new or resolved issues, review what’s open and prepare team updates grounded in the latest activity.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12526595-linear-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize new Linear issues from this week","source": "https://help.openai.com/en/articles/12526595-linear-app-with-sync"},{"prompt": "Show progress on feature development in Linear","source": "https://help.openai.com/en/articles/12526595-linear-app-with-sync"},{"prompt": "Draft a team update from Linear activity","source": "https://help.openai.com/en/articles/12526595-linear-app-with-sync"}],"developer": "OpenAI","release_date": "2025-10-09"},{"name": "LSEG","category": "Finance","capabilities": ["None"],"description": "Access LSEG’s institutional‑grade financial data and analytics. You can price and analyze bonds, calculate FX forwards and spots, retrieve equity fundamentals and analyst estimates, search global news and earnings transcripts and explore macroeconomic indicators—leveraging the same trusted data that powers global financial markets.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "LSEG","release_date": "2025-12"},{"name": "Monday.com","category": "Productivity","capabilities": ["Writes(API)"],"description": "This MCP connector enables AI agents to interact with monday.com. It provides comprehensive access to boards, item operations, dashboards and more, allowing AI assistants to manage projects, gain insights and automate workflows within monday.com.","verbatims": [],"documentation": "https://support.monday.com/hc/en-us/articles/29491695661458-Connect-monday-MCP-with-ChatGPT","microsoft_connector": "no","showcase_prompts": [{"prompt": "List my boards","source": "https://support.monday.com/hc/en-us/articles/29491695661458-Connect-monday-MCP-with-ChatGPT"}],"developer": "Monday.com","release_date": "2025-11"},{"name": "Netlify","category": "Developer Tools","capabilities": ["Writes(API)"],"description": "The Netlify app empowers AI agents to autonomously build, deploy and manage web projects through natural‑language commands. It connects ChatGPT to the Netlify platform to automate deployments, manage environment variables, handle form submissions and streamline development workflows.","verbatims": [],"documentation": "https://docs.netlify.com/extend/install-and-use/setup-guides/gpt-action/","microsoft_connector": "no","showcase_prompts": [],"developer": "Netlify","release_date": "2025-11"},{"name": "Notion","category": "Productivity","capabilities": ["File Search(MCP)"],"description": "Search and reference your Notion pages within ChatGPT.","verbatims": [{"text": "“Notion continues to be my favorite time-saver – here’s why.”","source": "TechRadar (Jan 3, 2026)","url": "https://www.techradar.com/computing/websites-apps/notion-is-now-way-more-than-a-note-taking-app-here-are-5-ways-im-using-it-to-run-my-life-in-2026"},{"text": "“What I like most about Notion is its flexibility. It allows me to organize everything in one place…”","source": "G2 review","url": "https://www.g2.com/products/notion/reviews"}],"documentation": "https://www.notion.com/help/notion-mcp","microsoft_connector": "no","showcase_prompts": [],"developer": "Notion","release_date": "2025-10-09"},{"name": "Outlook Calendar","category": "Productivity","capabilities": ["None"],"description": "Review your Outlook email threads and calendar events to prepare for calls, revisit past conversations, surface upcoming meetings or pull out action items. Use your communication and schedule history to create talking points, clarify follow‑ups and stay organized.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "OpenAI","release_date": "2025-08"},{"name": "Outlook Email","category": "Productivity","capabilities": ["None"],"description": "Review your Outlook email threads and calendar events to prepare for calls, revisit past conversations, surface upcoming meetings or pull out action items. Use your communication and schedule history to create talking points, clarify follow‑ups and stay organized.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "OpenAI","release_date": "2025-08"},{"name": "Pipedrive","category": "Business","capabilities": ["File Search(MCP)","Sync"],"description": "The Pipedrive app with sync lets ChatGPT securely access your team’s Pipedrive CRM data—such as deals, contacts and activities—to help answer questions, generate summaries and draft updates.","verbatims": [],"documentation": "https://help.openai.com/en/articles/20001041-pipedrive-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Show my active deals in Pipedrive","source": "https://help.openai.com/en/articles/20001041-pipedrive-app-with-sync"},{"prompt": "Summarize upcoming activities from Pipedrive","source": "https://help.openai.com/en/articles/20001041-pipedrive-app-with-sync"},{"prompt": "Draft a sales summary from Pipedrive data","source": "https://help.openai.com/en/articles/20001041-pipedrive-app-with-sync"}],"developer": "OpenAI","release_date": "2025-11"},{"name": "PitchBook","category": "Finance","capabilities": ["None"],"description": "PitchBook provides structured access to private capital‑market data across companies, investors, funds, deals, limited partners and people. It returns normalized fields like firmographics, financing rounds, deal terms, ownership information, financials and fund performance metrics. Use it for factual information on private companies, investment activity or market participants, including summarizing activity or assembling datasets for analysis.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "PitchBook","release_date": "2025-12"},{"name": "SharePoint","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "Work with documents stored in SharePoint or OneDrive—including PDFs, Word, PowerPoint and Excel files—to create onboarding guides, prepare pre‑reads, summarize complex materials or extract key points for stakeholders. Combine content across files to produce clear outputs grounded in your organization’s knowledge.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12143177-sharepoint-synced-connectors-setup","microsoft_connector": "no","showcase_prompts": [{"prompt": "Create an onboarding guide from SharePoint documents","source": "https://help.openai.com/en/articles/12143177-sharepoint-synced-connectors-setup"},{"prompt": "Summarize quarterly reports in SharePoint","source": "https://help.openai.com/en/articles/12143177-sharepoint-synced-connectors-setup"},{"prompt": "Draft a policy summary from SharePoint files","source": "https://help.openai.com/en/articles/12143177-sharepoint-synced-connectors-setup"}],"developer": "OpenAI","release_date": "2025-06-04"},{"name": "Slack","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "Use your Slack messages and channel discussions to create recaps, gather background before a meeting, highlight decisions or draft responses with the right context. Summarize long threads, review message history and consolidate updates shared across multiple channels.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628434-slack-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize yesterday's Slack discussions","source": "https://help.openai.com/en/articles/12628434-slack-app-with-sync"},{"prompt": "Find decisions made in Slack channels this week","source": "https://help.openai.com/en/articles/12628434-slack-app-with-sync"},{"prompt": "Draft a meeting recap from Slack messages","source": "https://help.openai.com/en/articles/12628434-slack-app-with-sync"}],"developer": "OpenAI","release_date": "2025-10"},{"name": "Stripe","category": "Finance","capabilities": ["File Search(MCP)","Writes(API)"],"description": "Manage your business and develop your payments integration.","verbatims": [],"documentation": "https://docs.stripe.com/mcp","microsoft_connector": "no","showcase_prompts": [{"prompt": "Create a payment for $100","source": "https://docs.stripe.com/mcp"}],"developer": "Stripe","release_date": "2025-11"},{"name": "Teams","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "Look up chats and messages within Microsoft Teams using ChatGPT.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628401-teams-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Find recent conversations about project X in Teams","source": "https://help.openai.com/en/articles/12628401-teams-app-with-sync"},{"prompt": "Summarize Teams chat from this week","source": "https://help.openai.com/en/articles/12628401-teams-app-with-sync"},{"prompt": "Draft meeting notes from Teams messages","source": "https://help.openai.com/en/articles/12628401-teams-app-with-sync"}],"developer": "OpenAI","release_date": "2025-09"},{"name": "Teamwork.com","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"description": "The Teamwork.com app with sync lets ChatGPT securely access your team’s projects, milestones, tasks and subtasks to answer questions. Once enabled, ChatGPT automatically references Teamwork.com content when relevant.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628436-teamworkcom-synced-connector","microsoft_connector": "no","showcase_prompts": [{"prompt": "Show tasks due this week in Teamwork","source": "https://help.openai.com/en/articles/12628436-teamworkcom-synced-connector"},{"prompt": "Summarize project milestones from Teamwork.com","source": "https://help.openai.com/en/articles/12628436-teamworkcom-synced-connector"},{"prompt": "Draft a project status update from Teamwork data","source": "https://help.openai.com/en/articles/12628436-teamworkcom-synced-connector"}],"developer": "OpenAI","release_date": "2025-09"},{"name": "Vercel","category": "Developer Tools","capabilities": ["Writes(API)"],"description": "Vercel’s MCP brings your projects, deployments and documentation directly into ChatGPT. Use natural language to inspect deployments, debug build logs, configure deployment protection settings, brainstorm domains and check real‑time availability and pricing, and query up‑to‑date docs—all without leaving chat.","verbatims": [],"documentation": "https://docs.vercel.com/kb/guide/mcp-server-chatgpt-connector","microsoft_connector": "no","showcase_prompts": [],"developer": "Vercel","release_date": "2025-11"},{"name": "Zoho","category": "Business","capabilities": ["File Search(MCP)","Sync"],"description": "Connect to sync Zoho CRM records and activities for use in ChatGPT.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12825765-zoho-crm-synced-connector","microsoft_connector": "no","showcase_prompts": [{"prompt": "Show my active opportunities in Zoho CRM","source": "https://help.openai.com/en/articles/12825765-zoho-crm-synced-connector"},{"prompt": "Summarize recent customer activities from Zoho","source": "https://help.openai.com/en/articles/12825765-zoho-crm-synced-connector"},{"prompt": "Draft a sales pipeline report from Zoho CRM","source": "https://help.openai.com/en/articles/12825765-zoho-crm-synced-connector"}],"developer": "OpenAI","release_date": "2025-10"},{"name": "Zoho Desk","category": "Collaboration","capabilities": ["File Search(MCP)","Sync"],"description": "The Zoho Desk app with sync lets ChatGPT securely access your team’s Zoho Desk tickets and threads, contacts and accounts to answer questions. Once connected, ChatGPT automatically references Zoho Desk content when helpful.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12628448-zoho-desk-synced-connector","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize open support tickets in Zoho Desk","source": "https://help.openai.com/en/articles/12628448-zoho-desk-synced-connector"},{"prompt": "Find common customer issues from Zoho Desk","source": "https://help.openai.com/en/articles/12628448-zoho-desk-synced-connector"},{"prompt": "Draft a support summary from Zoho Desk tickets","source": "https://help.openai.com/en/articles/12628448-zoho-desk-synced-connector"}],"developer": "OpenAI","release_date": "2025-10"},{"name": "Zoom","category": "Collaboration","capabilities": ["Interactive(API)","Writes(API)"],"description": "Bring Zoom’s meeting intelligence, powered by Zoom AI Companion, into ChatGPT. Instantly access post‑meeting assets including summaries, recordings, documents and whiteboards. Ask questions and get precise moments from recordings with an embedded player that jumps to the exact discussion point. Make meetings searchable, actionable and seamlessly integrated into AI workflows.","verbatims": [],"documentation": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0083574","microsoft_connector": "no","showcase_prompts": [],"developer": "Zoom Video Communications","release_date": "2025-11"},{"name": "Cloudinary","category": "Developer Tools","capabilities": ["Writes(API)"],"notes": "The Cloudinary app connects your Cloudinary account to ChatGPT, giving you full control over your visual assets through natural language. Upload, organize, tag, transform, and analyze images or videos without leaving the chat. What You Can Do - Upload assets from URLs, local files, or base64 data — automatically analyze, tag, or moderate them. - Browse and search your entire media library using smart filters or text queries (tags, format, date, size, etc.). - Organize your library — create folders, rename files, manage metadata, and clean up obsolete assets. - Transform images or videos with Cloudinary’s powerful syntax — resize, crop, watermark, apply filters, or optimize for delivery. - Generate archives and backups, or restore previous versions when needed. - Analyze assets with AI — detect faces, extract text, get color palettes, and accessibility scores. - Monitor usage — track storage, bandwidth, and transformation credits in real time. - Visual search — find visually similar images by uploading an example or describing it. Perfect For - Developers who want to experiment with Cloudinary API commands in natural language. - Marketers & designers managing campaign visuals and brand assets. - Teams automating content workflows with ChatGPT or building multi-agent setups. Turn ChatGPT into a powerful media management assistant with the Cloudinary app.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Cloudinary","release_date": "2025-12"},{"name": "Coursera","category": "Education","capabilities": ["Interactive(API)"],"notes": "Unlock world-class learning instantly with Coursera’s app in ChatGPT. Whether you want to explore a new topic, advance your career, or build job-ready skills, Coursera brings high-quality education directly to you.\n\nJust tell ChatGPT what you want to learn, and the Coursera app will surface a relevant video lecture—pulled from thousands of courses taught by experts from institutions like Microsoft, Duke University, Adobe and more.\n\nMillions of learners worldwide trust Coursera to help them grow personally and professionally. Now, the world’s best learning is at your fingertips—dive in.","verbatims": [],"documentation": "","microsoft_connector": "no","showcase_prompts": [],"developer": "Coursera","release_date": "2025-10-06"},{"name": "Dropbox","category": "Productivity","capabilities": ["File Search(MCP)","Sync"],"notes": "Find and access your stored files\n\nUse your Dropbox files to gather insights, prepare briefs, and summarize reports or internal documents. Combine related materials into a single overview, extract the most important details, or condense long PDFs into a sharper take-away. It’s a fast way to turn stored content into clear, usable writing.","verbatims": [],"documentation": "https://help.openai.com/en/articles/12364275-dropbox-app-with-sync","microsoft_connector": "no","showcase_prompts": [{"prompt": "Summarize reports stored in Dropbox","source": "https://help.openai.com/en/articles/12364275-dropbox-app-with-sync"},{"prompt": "Create a brief from Dropbox documents","source": "https://help.openai.com/en/articles/12364275-dropbox-app-with-sync"},{"prompt": "Extract key points from Dropbox PDFs","source": "https://help.openai.com/en/articles/12364275-dropbox-app-with-sync"}],"developer": "OpenAI","release_date": "2025-06-04"}],"categories": ["Business","Collaboration","Design","Developer Tools","Entertainment","Finance","Food","Productivity","Travel","Education"],"capabilities": ["Interactive(API)","Writes(API)","File Search(MCP)","Sync","None"]};
+
+  const apps = DATA.apps;
+  const categories = DATA.categories;
+  const capsOrder = DATA.capabilities;
+
+  const palette = ["#7aa2ff","#2dd4bf","#fbbf24","#f472b6","#a78bfa","#fb7185","#34d399","#60a5fa","#f97316","#22c55e"];
+  const catColor = {};
+  categories.forEach((c,i)=>catColor[c]=palette[i % palette.length]);
+
+  const q = document.getElementById("q");
+  const capFilterEl = document.getElementById("capFilter");
+  const catFilterEl = document.getElementById("catFilter");
+const focusToggle = document.getElementById("focusToggle");
+  let focusUserOverride = false;
+const openaiToggle = document.getElementById("openaiToggle");
+const listOpenaiToggle = document.getElementById("listOpenaiToggle");
+const timelineOpenaiToggle = document.getElementById("timelineOpenaiToggle");
+const resetBtn = document.getElementById("resetBtn");
+  const exportBtn = document.getElementById("exportBtn");
+
+  const headRow = document.getElementById("headRow");
+  const bodyRows = document.getElementById("bodyRows");
+  const summary = document.getElementById("summary");
+
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalCategory = document.getElementById("modalCategory");
+  const modalCaps = document.getElementById("modalCaps");
+  const modalDeveloper = document.getElementById("modalDeveloper");
+  const modalReleaseDate = document.getElementById("modalReleaseDate");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalVerbatims = document.getElementById("modalVerbatims");
+  const closeModal = document.getElementById("closeModal");
+
+  // Multi-select controls (empty selection means "All")
+  const capMS = buildMultiSelect(capFilterEl, capsOrder, {labelFn:(v)=> (v === "None" ? "No capabilities listed" : v)});
+  const catMS = buildMultiSelect(catFilterEl, categories);
+
+  function normalize(s){ return (s || "").toLowerCase().trim(); }
+
+  // Basic escaping helpers for rendering verbatims safely
+  function escapeHTML(str){
+    return String(str || "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/\'/g,"&#39;");
+  }
+  function escapeAttr(str){
+    return String(str || "")
+      .replace(/"/g,"%22")
+      .replace(/\s/g,"%20");
+  }
+
+
+  function buildMultiSelect(containerEl, items, {labelFn} = {}){
+    const state = {
+      selected: new Set(), // empty = "All"
+      filter: ""
+    };
+
+    containerEl.classList.add("ms");
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "msBtn";
+    btn.setAttribute("aria-haspopup", "listbox");
+    btn.setAttribute("aria-expanded", "false");
+
+    const btnText = document.createElement("span");
+    const btnBadge = document.createElement("span");
+    btnBadge.className = "msBadge";
+    btn.appendChild(btnText);
+    btn.appendChild(btnBadge);
+
+    const panel = document.createElement("div");
+    panel.className = "msPanel";
+    panel.style.display = "none";
+    panel.setAttribute("role", "listbox");
+
+    const tools = document.createElement("div");
+    tools.className = "msTools";
+
+    const search = document.createElement("input");
+    search.className = "msSearch";
+    search.type = "search";
+    search.placeholder = "Filter…";
+
+    const toolBtns = document.createElement("div");
+    toolBtns.style.display = "flex";
+    toolBtns.style.gap = "8px";
+    toolBtns.style.flexWrap = "wrap";
+    toolBtns.style.justifyContent = "flex-end";
+
+    const selectAllBtn = document.createElement("button");
+    selectAllBtn.type = "button";
+    selectAllBtn.textContent = "Select all";
+
+    const clearBtn = document.createElement("button");
+    clearBtn.type = "button";
+    clearBtn.textContent = "Clear";
+
+    toolBtns.appendChild(selectAllBtn);
+    toolBtns.appendChild(clearBtn);
+
+    tools.appendChild(search);
+    tools.appendChild(toolBtns);
+
+    const list = document.createElement("div");
+    panel.appendChild(tools);
+    panel.appendChild(list);
+
+    containerEl.appendChild(btn);
+    containerEl.appendChild(panel);
+
+    function itemLabel(v){
+      if (labelFn) return labelFn(v);
+      return v;
+    }
+
+    function renderRows(){
+      list.innerHTML = "";
+      const f = (state.filter || "").toLowerCase().trim();
+      for (const v of items){
+        const label = itemLabel(v);
+        if (f && !String(label).toLowerCase().includes(f) && !String(v).toLowerCase().includes(f)) continue;
+
+        const row = document.createElement("label");
+        row.className = "msRow";
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.value = v;
+        cb.checked = state.selected.has(v);
+
+        const txt = document.createElement("span");
+        txt.textContent = label;
+
+        row.appendChild(cb);
+        row.appendChild(txt);
+
+        cb.addEventListener("change", ()=>{
+          if (cb.checked) state.selected.add(v);
+          else state.selected.delete(v);
+          refreshButton();
+          containerEl.dispatchEvent(new CustomEvent("mschange"));
+        });
+
+        list.appendChild(row);
+      }
+    }
+
+    function refreshButton(){
+      const n = state.selected.size;
+      btnText.textContent = (n === 0) ? "All" : (n === 1 ? itemLabel(Array.from(state.selected)[0]) : "Multiple");
+      btnBadge.textContent = (n === 0) ? "All" : (n + " selected");
+      btn.setAttribute("aria-expanded", containerEl.classList.contains("open") ? "true" : "false");
+    }
+
+    function positionPanel(){
+      // If panel is portaled to body, we need to position it under the button.
+      const r = btn.getBoundingClientRect();
+      const desiredWidth = Math.max(r.width, 340);
+      panel.style.width = desiredWidth + "px";
+      panel.style.left = r.left + "px";
+      panel.style.top = (r.bottom + 8) + "px";
+      // Keep within viewport horizontally
+      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+      if (r.left + desiredWidth > vw - 8){
+        panel.style.left = Math.max(8, vw - desiredWidth - 8) + "px";
+      }
+    }
+
+    function portalOn(){
+      if (!panel.classList.contains("portal")){
+        panel.classList.add("portal");
+        document.body.appendChild(panel);
+      }
+      positionPanel();
+    }
+    function portalOff(){
+      // move panel back inside container for DOM cleanliness
+      if (panel.classList.contains("portal")){
+        panel.classList.remove("portal");
+        containerEl.appendChild(panel);
+        panel.style.left = "";
+        panel.style.top = "";
+        panel.style.width = "";
+      }
+    }
+
+    function open(){
+      containerEl.classList.add("open");
+      portalOn();
+      panel.style.display = "block";
+      refreshButton();
+      setTimeout(()=>search.focus(), 0);
+    }
+    function close(){
+      containerEl.classList.remove("open");
+      panel.style.display = "none";
+      portalOff();
+      refreshButton();
+    }
+    function toggle(){
+      containerEl.classList.contains("open") ? close() : open();
+    }
+
+    btn.addEventListener("click", (e)=>{ e.preventDefault(); toggle(); });
+
+    search.addEventListener("input", ()=>{
+      state.filter = search.value || "";
+      renderRows();
+    });
+
+    selectAllBtn.addEventListener("click", ()=>{
+      state.selected = new Set(items);
+      renderRows();
+      refreshButton();
+      containerEl.dispatchEvent(new CustomEvent("mschange"));
+    });
+
+    clearBtn.addEventListener("click", ()=>{
+      state.selected = new Set(); // empty => All
+      renderRows();
+      refreshButton();
+      containerEl.dispatchEvent(new CustomEvent("mschange"));
+    });
+
+    document.addEventListener("click", (e)=>{
+      if (!containerEl.contains(e.target)) close();
+    });
+
+    document.addEventListener("keydown", (e)=>{
+      if (e.key === "Escape" && containerEl.classList.contains("open")) close();
+    });
+
+    window.addEventListener("resize", ()=>{
+      if (containerEl.classList.contains("open")) positionPanel();
+    });
+    window.addEventListener("scroll", ()=>{
+      if (containerEl.classList.contains("open")) positionPanel();
+    }, true);
+
+    function getSelected(){ return new Set(state.selected); }
+    function clear(){
+      state.selected = new Set();
+      renderRows();
+      refreshButton();
+      containerEl.dispatchEvent(new CustomEvent("mschange"));
+    }
+
+    renderRows();
+    refreshButton();
+
+    return { getSelected, clear };
+  }
+
+  function appsInCell(capability, category){
+    return apps
+      .filter(a => a.category === category && (a.capabilities || []).includes(capability))
+      .map(a => a.name)
+      .sort((a,b)=>a.localeCompare(b));
+  }
+
+  function buildMatrix(){
+    categories.forEach(cat=>{
+      const th = document.createElement("th");
+      th.dataset.cat = cat;
+      th.innerHTML = '<span class="legendDot" style="background:'+catColor[cat]+'"></span>'+cat+' <span class="hdrCount" data-colcount="'+cat+'"><strong>0</strong></span>';
+      headRow.appendChild(th);
+    });
+
+    capsOrder.forEach(cap=>{
+      const tr = document.createElement("tr");
+      tr.dataset.cap = cap;
+
+      const th = document.createElement("th");
+      th.innerHTML = ((cap === "None") ? "No capabilities listed" : cap) + ' <span class="hdrCount" data-rowcount="'+cap+'"><strong>0</strong></span>';
+      tr.appendChild(th);
+
+      categories.forEach(cat=>{
+        const td = document.createElement("td");
+        td.dataset.cat = cat;
+        td.dataset.cap = cap;
+
+        const list = appsInCell(cap, cat);
+        if (list.length === 0){
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "—";
+          td.appendChild(empty);
+        } else {
+          // compact: chips directly in cell + tiny count badge (top-right)
+          const badge = document.createElement("div");
+          badge.className = "cellBadge";
+          badge.textContent = String(list.length);
+          td.appendChild(badge);
+
+          const chips = document.createElement("div");
+          chips.className = "chips";
+
+          list.forEach(name=>{
+            const chip = document.createElement("span");
+            chip.className = "chip";
+            chip.dataset.app = name;
+            const app = apps.find(a => a.name === name);
+            if (app && app.developer === 'OpenAI') {
+              chip.classList.add('openai-app');
+            }
+            chip.innerHTML = '<span class="legendDot" style="background:'+catColor[cat]+'"></span>'+name;
+            chip.addEventListener("click", ()=>openModal(name));
+            chips.appendChild(chip);
+          });
+
+          td.appendChild(chips);
+        }
+
+        tr.appendChild(td);
+      });
+
+      bodyRows.appendChild(tr);
+    });
+  }
+
+  function openModal(appName){
+    const app = apps.find(a=>a.name===appName);
+    if (!app) return;
+    modalTitle.textContent = app.name;
+    modalCategory.textContent = app.category;
+    const caps = (app.capabilities || []).slice().sort((a,b)=>a.localeCompare(b));
+    modalCaps.textContent = caps.includes("None") ? "None listed in directory" : caps.join(", ");
+    
+    // Developer
+    modalDeveloper.textContent = app.developer || "Unknown";
+    
+    // Release date
+    modalReleaseDate.textContent = app.release_date || "Not specified";
+    
+    modalDesc.textContent = (app.notes || app.description || "Description not available.");
+
+    // Documentation
+    const modalDocs = document.getElementById("modalDocs");
+    if (modalDocs){
+      if (app.documentation && app.documentation.trim()){
+        const docUrl = escapeAttr(app.documentation);
+        modalDocs.innerHTML = `<a href="${docUrl}" target="_blank" rel="noopener">View Documentation</a>`;
+      } else {
+        modalDocs.innerHTML = "<span class=\"empty\">Not available yet</span>";
+      }
+    }
+
+    // Microsoft Connector
+    const modalMSConnector = document.getElementById("modalMSConnector");
+    if (modalMSConnector){
+      modalMSConnector.textContent = app.microsoft_connector || "no";
+    }
+
+    // Showcase prompts
+    const modalShowcasePrompts = document.getElementById("modalShowcasePrompts");
+    const showcasePrompts = (app.showcase_prompts || []);
+    if (modalShowcasePrompts){
+      if (!showcasePrompts.length){
+        modalShowcasePrompts.innerHTML = "<span class=\"empty\">No showcase prompts available yet.</span>";
+      } else {
+        const items = showcasePrompts.map(p => {
+          const promptText = escapeHTML(p.prompt || "");
+          const sourceUrl = escapeAttr(p.source || "");
+          const srcHtml = sourceUrl ? `<a href=\"${sourceUrl}\" target=\"_blank\" rel=\"noopener\">${sourceUrl}</a>` : "No source";
+          return `<li style=\"margin:6px 0\"><div style=\"font-style:italic\">"${promptText}"</div><div style=\"font-size:12px;opacity:.75\">Source: ${srcHtml}</div></li>`;
+        }).join("");
+        modalShowcasePrompts.innerHTML = `<ul style=\"padding-left:18px;margin:0\">${items}</ul>`;
+      }
+    }
+
+    // User verbatims
+    const vs = (app.verbatims || []);
+    if (modalVerbatims){
+      if (!vs.length){
+        modalVerbatims.innerHTML = "<span class=\"empty\">No verified verbatims added yet.</span>";
+      } else {
+        const items = vs.map(v => {
+          const text = escapeHTML(v.text || "");
+          const src = escapeHTML(v.source || "Source");
+          const url = escapeAttr(v.url || "");
+          const srcHtml = url ? `<a href=\"${url}\" target=\"_blank\" rel=\"noopener\">${src}</a>` : src;
+          return `<li style=\"margin:6px 0\"><div>${text}</div><div style=\"font-size:12px;opacity:.75\">${srcHtml}</div></li>`;
+        }).join("");
+        modalVerbatims.innerHTML = `<ul style=\"padding-left:18px;margin:0\">${items}</ul>`;
+      }
+    }
+
+    modal.showModal();
+  }
+
+  function applyFilters(){
+    const query = normalize(q.value);
+    const capSet = capMS.getSelected();
+    const catSet = catMS.getSelected();
+    const capAll = (capSet.size === 0);
+    const catAll = (catSet.size === 0);
+const hasSearch = query.length > 0;
+    const hasFacet = (capSet.size > 0) || (catSet.size > 0);
+    const anyFilterActive = hasSearch || hasFacet || openaiToggle.checked;
+    // Auto-enable Focus mode whenever filters/search are active (unless user explicitly changed it).
+    if (!focusUserOverride){
+      focusToggle.checked = anyFilterActive;
+    }
+    const focusOn = focusToggle.checked && anyFilterActive;
+document.querySelectorAll("thead th[data-cat]").forEach(th=>{
+      const show = (catAll || catSet.has(th.dataset.cat));
+      th.style.display = show ? "" : "none";
+    });
+
+    let visibleApps = 0;
+    let visibleCells = 0;
+    let maxCellCount = 0;
+
+    const rows = Array.from(bodyRows.querySelectorAll("tr"));
+
+    // max per cell for heatmap
+    for (const tr of rows){
+      const cap = tr.dataset.cap;
+      if (!(capAll || capSet.has(cap))) continue;
+      for (const td of tr.querySelectorAll("td")){
+        const cat = td.dataset.cat;
+        if (!(catAll || catSet.has(cat))) continue;
+        const chips = Array.from(td.querySelectorAll(".chip"));
+        let cnt = 0;
+        for (const chip of chips){
+          if (normalize(chip.dataset.app).includes(query)) cnt++;
+        }
+        if (cnt > maxCellCount) maxCellCount = cnt;
+      }
+    }
+    if (maxCellCount === 0) maxCellCount = 1;
+
+    for (const tr of rows){
+      const cap = tr.dataset.cap;
+      const rowAllowed = (capAll || capSet.has(cap));
+      tr.style.display = rowAllowed ? "" : "none";
+      if (!rowAllowed) continue;
+
+      for (const td of tr.querySelectorAll("td")){
+        const cat = td.dataset.cat;
+        const cellAllowed = (catAll || catSet.has(cat));
+        td.style.display = cellAllowed ? "" : "none";
+        if (!cellAllowed) continue;
+
+        const chips = Array.from(td.querySelectorAll(".chip"));
+        let anyVisible = false;
+        let cnt = 0;
+
+        for (const chip of chips){
+          const appName = chip.dataset.app;
+          const nameMatches = normalize(appName).includes(query);
+          const app = apps.find(a => a.name === appName);
+          const isOpenAI = app && app.developer === 'OpenAI';
+          const openaiMatches = !openaiToggle.checked || isOpenAI;
+          const ok = nameMatches && openaiMatches;
+          chip.classList.toggle("hide", !ok);
+          if (ok){ anyVisible = true; cnt++; visibleApps++; }
+        }
+
+        // Heat cue: keep empty cells visually quiet.
+        // Only apply a subtle outline/tint when there is visible content in the cell.
+        if (cnt > 0 && maxCellCount > 0){
+          const ratio = cnt / maxCellCount;
+          const thickness = 1 + Math.round(2 * ratio); // 1–3px
+          const alpha = Math.min(0.22, 0.06 + (0.16 * ratio)); // subtle
+          td.style.background = "transparent";
+          td.style.boxShadow = "inset 0 0 0 " + thickness + "px rgba(255,255,255," + alpha.toFixed(3) + ")";
+        } else {
+          td.style.background = "transparent";
+          td.style.boxShadow = "none";
+        }
+
+        const badge = td.querySelector(".cellBadge");
+        if (badge){
+          badge.textContent = String(cnt);
+          badge.style.display = (cnt > 0) ? "" : "none";
+        }
+        visibleCells++;
+}
+    }
+
+    
+    // Row & column unique app counts (no double counting)
+    const rowSets = new Map();  // cap -> Set(appName)
+    const colSets = new Map();  // cat -> Set(appName)
+    categories.forEach(c=>colSets.set(c, new Set()));
+
+    const visibleRows = Array.from(bodyRows.querySelectorAll("tr"))
+      .filter(tr => tr.style.display !== "none");
+
+    for (const tr of visibleRows){
+      const cap = tr.dataset.cap;
+      if (!rowSets.has(cap)) rowSets.set(cap, new Set());
+      const cells = Array.from(tr.querySelectorAll("td"))
+        .filter(td => td.style.display !== "none" && td.style.visibility !== "hidden");
+      for (const td of cells){
+        const cat = td.dataset.cat;
+        const chips = Array.from(td.querySelectorAll(".chip"))
+          .filter(chip => !chip.classList.contains("hide"));
+        for (const chip of chips){
+          const name = chip.dataset.app;
+          rowSets.get(cap).add(name);
+          if (colSets.has(cat)) colSets.get(cat).add(name);
+        }
+      }
+    }
+
+    // Update row count badges
+    for (const [cap, setv] of rowSets.entries()){
+      const el = document.querySelector('[data-rowcount="'+cap+'"] strong');
+      if (el) el.textContent = setv.size;
+    }
+
+    // FOCUS_MODE_APPLIED: hide empty rows/cols when focus is ON
+    if (focusOn){
+      // hide rows with 0 visible apps
+      for (const cap of capsOrder){
+        const tr = bodyRows.querySelector('tr[data-cap="'+cap+'"]');
+        if (!tr || tr.style.display === "none") continue; // already filtered out
+        const set = rowSets.get(cap);
+        if (!set || set.size === 0){
+          tr.style.display = "none";
+        }
+      }
+
+      // hide columns with 0 visible apps (and their cells)
+      for (const cat of categories){
+        const set = colSets.get(cat);
+        const hideCol = (!set || set.size === 0);
+        const th = document.querySelector('thead th[data-cat="'+cat+'"]');
+        if (th) th.style.display = hideCol ? "none" : "";
+        bodyRows.querySelectorAll('td[data-cat="'+cat+'"]').forEach(td=>{
+          td.style.display = hideCol ? "none" : "";
+        });
+      }
+    }
+    // Rows that are hidden should show 0
+    capsOrder.forEach(cap=>{
+      const tr = bodyRows.querySelector('tr[data-cap="'+cap+'"]');
+      const el = document.querySelector('[data-rowcount="'+cap+'"] strong');
+      if (el && tr && tr.style.display === "none") el.textContent = 0;
+    });
+
+    // Update column count badges
+    for (const cat of categories){
+      const hdr = document.querySelector('[data-colcount="'+cat+'"]');
+      if (!hdr) continue;
+      const strong = hdr.querySelector("strong");
+      const th = document.querySelector('thead th[data-cat="'+cat+'"]');
+      const shown = !th || th.style.display !== "none";
+      strong.textContent = shown ? (colSets.get(cat)?.size || 0) : 0;
+    }
+
+    summary.textContent = "Showing " + visibleApps + " matching apps across " + visibleCells + " visible cells.";
+  }
+
+
+  // ---------- List view + capability query builder ----------
+  const matrixView = document.getElementById("matrixView");
+  const listView = document.getElementById("listView");
+  const timelineView = document.getElementById("timelineView");
+  const viewMatrixBtn = document.getElementById("viewMatrixBtn");
+  const viewListBtn = document.getElementById("viewListBtn");
+  const viewTimelineBtn = document.getElementById("viewTimelineBtn");
+
+  const capQueryInput = document.getElementById("capQueryInput");
+  const applyQueryBtn = document.getElementById("applyQueryBtn");
+  const clearQueryBtn = document.getElementById("clearQueryBtn");
+  const includeCapsEl = document.getElementById("includeCaps");
+  const excludeCapsEl = document.getElementById("excludeCaps");
+  const listResults = document.getElementById("listResults");
+  const listCount = document.getElementById("listCount");
+  const listSearch = document.getElementById("listSearch");
+
+  const qbCaps = capsOrder.slice(); // includes "None" (special)
+  const includeMS = buildMultiSelect(includeCapsEl, qbCaps, {labelFn:(v)=> (v === "None" ? "No capabilities listed" : v)});
+  const excludeMS = buildMultiSelect(excludeCapsEl, qbCaps, {labelFn:(v)=> (v === "None" ? "No capabilities listed" : v)});
+
+  function setActiveView(which){
+    const isList = (which === "list");
+    const isTimeline = (which === "timeline");
+    const isMatrix = (which === "matrix");
+    
+    document.body.classList.toggle("listMode", isList || isTimeline);
+    const matrixFiltersBlock = document.getElementById("matrixFiltersBlock");
+    if (matrixFiltersBlock){
+      matrixFiltersBlock.hidden = isList || isTimeline;
+      matrixFiltersBlock.style.display = (isList || isTimeline) ? "none" : "flex";
+    }
+    matrixView.hidden = !isMatrix;
+    listView.hidden = !isList;
+    timelineView.hidden = !isTimeline;
+
+    viewMatrixBtn.classList.toggle("active", isMatrix);
+    viewListBtn.classList.toggle("active", isList);
+    viewTimelineBtn.classList.toggle("active", isTimeline);
+    viewMatrixBtn.setAttribute("aria-pressed", String(isMatrix));
+    viewListBtn.setAttribute("aria-pressed", String(isList));
+    viewTimelineBtn.setAttribute("aria-pressed", String(isTimeline));
+
+    if (isList) renderList();
+    if (isTimeline) renderTimeline();
+  }
+  viewMatrixBtn.addEventListener("click", ()=>setActiveView("matrix"));
+  viewListBtn.addEventListener("click", ()=>setActiveView("list"));
+  viewTimelineBtn.addEventListener("click", ()=>setActiveView("timeline"));
+
+  function norm(s){ return String(s || "").toLowerCase().trim(); }
+  function escapeRegExp(string) { return String(string).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+  function appHasCap(app, cap){
+    const caps = app.capabilities || [];
+    if (cap === "None") return caps.length === 0;
+    return caps.includes(cap);
+  }
+
+  function appMatchesBaseFilters(app){ return true; }
+
+  function appMatchesQueryBuilder(app){
+    const inc = includeMS.getSelected();
+    const exc = excludeMS.getSelected();
+
+    for (const c of inc){
+      if (!appHasCap(app, c)) return false;
+    }
+    for (const c of exc){
+      if (appHasCap(app, c)) return false;
+    }
+    return true;
+  }
+
+  function parseCapabilityQuery(text){
+    const t = String(text || "").toLowerCase();
+    const include = new Set();
+    const exclude = new Set();
+
+    // Build a regex that tolerates whitespace/punctuation differences.
+    // e.g. "Interactive(API)" matches "interactive(api)" and "interactive (api)"
+    const makeLoose = (cap) => {
+      const label = String(cap === "None" ? "none" : cap).toLowerCase();
+      const tokens = label.match(/[a-z0-9]+/g) || [];
+      if (tokens.length === 0) return null;
+      const body = tokens.map(escapeRegExp).join("\\W*");
+      return body;
+    };
+
+    for (const cap of qbCaps){
+      const body = makeLoose(cap);
+      if (!body) continue;
+
+      const negPatterns = [
+        new RegExp(`\\bno\\s+${body}\\b`, "i"),
+        new RegExp(`\\bwithout\\s+${body}\\b`, "i"),
+        new RegExp(`\\bnot\\s+${body}\\b`, "i"),
+        new RegExp(`\\bbut\\s+no\\s+${body}\\b`, "i"),
+      ];
+      const posPattern = new RegExp(`\\b${body}\\b`, "i");
+
+      const isNeg = negPatterns.some(rx => rx.test(t));
+      const isPos = posPattern.test(t);
+
+      if (isNeg) exclude.add(cap);
+      else if (isPos) include.add(cap);
+    }
+    return { include: Array.from(include), exclude: Array.from(exclude) };
+  }
+
+  function setMultiSelect(containerEl, values){
+    const set = new Set(values || []);
+    const panel = containerEl.querySelector(".msPanel");
+    if (!panel) return;
+    const inputs = panel.querySelectorAll('input[type="checkbox"]');
+    inputs.forEach(inp=>{
+      const want = set.has(inp.value);
+      if (inp.checked !== want){
+        inp.checked = want;
+        inp.dispatchEvent(new Event("change", {bubbles:true}));
+      }
+    });
+  }
+
+  function renderList(){
+    const term = (listSearch ? (listSearch.value || "") : "").toLowerCase().trim();
+    const filtered = apps.filter(a => {
+      if (!appMatchesQueryBuilder(a)) return false;
+      if (listOpenaiToggle.checked && a.developer !== 'OpenAI') return false;
+      if (!term) return true;
+      const hay = (a.name + " " + a.category + " " + (a.notes || "") + " " + (a.capabilities || []).join(" ")).toLowerCase();
+      return hay.includes(term);
+    });
+
+    listResults.innerHTML = "";
+    listCount.textContent = `${filtered.length}`;
+
+    if (filtered.length === 0){
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "No apps match this query.";
+      listResults.appendChild(empty);
+      return;
+    }
+
+    filtered.sort((a,b)=> (a.name || "").localeCompare(b.name || ""));
+
+    for (const app of filtered){
+      const item = document.createElement("div");
+      item.className = "rItem";
+      if (app.developer === 'OpenAI') {
+        item.classList.add('openai-app');
+      }
+      item.tabIndex = 0;
+      item.setAttribute("role", "button");
+      item.setAttribute("aria-label", `Open details for ${app.name}`);
+
+      const row = document.createElement("div");
+      row.className = "rRow";
+
+      const name = document.createElement("div");
+      name.className = "rName";
+      name.textContent = app.name;
+
+      const cat = document.createElement("div");
+      cat.className = "rCat";
+      cat.textContent = app.category;
+
+      const capsWrap = document.createElement("div");
+      capsWrap.className = "rCaps";
+      const caps = (app.capabilities || []);
+      const showCaps = (caps.length === 0) ? ["None"] : caps;
+      // limit chips to keep rows readable
+      const maxChips = 8;
+      const shown = showCaps.slice(0, maxChips);
+      const extra = showCaps.length - shown.length;
+
+      shown.forEach(c=>{
+        const tag = document.createElement("span");
+        tag.className = "capTag";
+        tag.textContent = (c === "None" ? "No capabilities" : c);
+        capsWrap.appendChild(tag);
+      });
+      if (extra > 0){
+        const tag = document.createElement("span");
+        tag.className = "capTag";
+        tag.textContent = `+${extra} more`;
+        capsWrap.appendChild(tag);
+      }
+
+      row.appendChild(name);
+      row.appendChild(cat);
+      row.appendChild(capsWrap);
+      item.appendChild(row);
+
+      item.addEventListener("click", ()=>openModal(app.name));
+      item.addEventListener("keydown", (e)=>{ if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openModal(app.name); } });
+
+      listResults.appendChild(item);
+    }
+  }
+
+  // keep list in sync with query builder filters
+  includeCapsEl.addEventListener("mschange", ()=>{ if (!listView.hidden) renderList(); });
+  excludeCapsEl.addEventListener("mschange", ()=>{ if (!listView.hidden) renderList(); });
+  if (listSearch){
+    listSearch.addEventListener("input", ()=>{ if (!listView.hidden) renderList(); });
+  }
+
+  applyQueryBtn.addEventListener("click", ()=>{
+    const q = (capQueryInput.value || "").trim();
+    if (q){
+      const {include, exclude} = parseCapabilityQuery(q);
+      includeMS.clear(); excludeMS.clear();
+      setMultiSelect(includeCapsEl, include);
+      setMultiSelect(excludeCapsEl, exclude);
+    }
+    if (!listView.hidden) renderList();
+  });
+
+  clearQueryBtn.addEventListener("click", ()=>{
+    capQueryInput.value = "";
+    includeMS.clear();
+    excludeMS.clear();
+    if (!listView.hidden) renderList();
+  });
+
+  // Default view
+  setActiveView("matrix");
+  // ---------------------------------------------------------
+
+  // ---------- Timeline view ----------
+  const timelineContainer = document.getElementById("timelineContainer");
+  const timelineCount = document.getElementById("timelineCount");
+  const timelineSearch = document.getElementById("timelineSearch");
+
+  function parseDate(dateStr){
+    if (!dateStr) return null;
+    // Handle formats like "2025-12-10" or "2023-03"
+    const parts = String(dateStr).split("-");
+    if (parts.length >= 2){
+      const year = parseInt(parts[0]);
+      const month = parseInt(parts[1]) - 1; // JS months are 0-indexed
+      const day = parts.length >= 3 ? parseInt(parts[2]) : 1;
+      return new Date(year, month, day);
+    }
+    return null;
+  }
+
+  function formatMonth(date){
+    if (!date) return "Unknown";
+    const months = ["January", "February", "March", "April", "May", "June", 
+                    "July", "August", "September", "October", "November", "December"];
+    return months[date.getMonth()];
+  }
+
+  function renderTimeline(){
+    const term = (timelineSearch ? (timelineSearch.value || "") : "").toLowerCase().trim();
+    
+    // Filter apps
+    const filtered = apps.filter(a => {
+      if (timelineOpenaiToggle.checked && a.developer !== 'OpenAI') return false;
+      if (!term) return true;
+      const hay = (a.name + " " + a.category).toLowerCase();
+      return hay.includes(term);
+    });
+
+    // Sort by date (newest first)
+    const sorted = filtered.slice().sort((a, b) => {
+      const dateA = parseDate(a.release_date);
+      const dateB = parseDate(b.release_date);
+      if (!dateA && !dateB) return 0;
+      if (!dateA) return 1;
+      if (!dateB) return -1;
+      return dateB - dateA; // Newest first
+    });
+
+    // Group by year and month
+    const grouped = {};
+    for (const app of sorted){
+      const date = parseDate(app.release_date);
+      const year = date ? date.getFullYear() : "Unknown";
+      const month = date ? formatMonth(date) : "Unknown";
+      
+      if (!grouped[year]) grouped[year] = {};
+      if (!grouped[year][month]) grouped[year][month] = [];
+      grouped[year][month].push(app);
+    }
+
+    timelineContainer.innerHTML = "";
+    timelineCount.textContent = `${filtered.length}`;
+
+    if (filtered.length === 0){
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "No apps match this search.";
+      timelineContainer.appendChild(empty);
+      return;
+    }
+
+    // Render timeline
+    const years = Object.keys(grouped).sort((a, b) => {
+      if (a === "Unknown") return 1;
+      if (b === "Unknown") return -1;
+      return parseInt(b) - parseInt(a); // Newest year first
+    });
+
+    for (const year of years){
+      const yearDiv = document.createElement("div");
+      yearDiv.className = "timelineYear";
+      
+      const yearLabel = document.createElement("div");
+      yearLabel.className = "yearLabel";
+      yearLabel.textContent = year;
+      yearDiv.appendChild(yearLabel);
+      timelineContainer.appendChild(yearDiv);
+
+      const months = Object.keys(grouped[year]);
+      // Sort months chronologically within the year
+      const monthOrder = ["January", "February", "March", "April", "May", "June", 
+                         "July", "August", "September", "October", "November", "December", "Unknown"];
+      months.sort((a, b) => {
+        const idxA = monthOrder.indexOf(a);
+        const idxB = monthOrder.indexOf(b);
+        // For descending year order, we want descending months too
+        return idxB - idxA;
+      });
+
+      for (const month of months){
+        const monthDiv = document.createElement("div");
+        monthDiv.className = "timelineMonth";
+        
+        const monthLabel = document.createElement("div");
+        monthLabel.className = "monthLabel";
+        monthLabel.textContent = month;
+        monthDiv.appendChild(monthLabel);
+        timelineContainer.appendChild(monthDiv);
+
+        const appsGrid = document.createElement("div");
+        appsGrid.className = "timelineApps";
+
+        for (const app of grouped[year][month]){
+          const appCard = document.createElement("div");
+          appCard.className = "timelineApp";
+          if (app.developer === 'OpenAI') {
+            appCard.classList.add('openai-app');
+          }
+          appCard.tabIndex = 0;
+          appCard.setAttribute("role", "button");
+          appCard.setAttribute("aria-label", `Open details for ${app.name}`);
+
+          const header = document.createElement("div");
+          header.className = "tlAppHeader";
+
+          const name = document.createElement("div");
+          name.className = "tlAppName";
+          name.textContent = app.name;
+
+          const date = document.createElement("div");
+          date.className = "tlAppDate";
+          date.textContent = app.release_date || "N/A";
+
+          header.appendChild(name);
+          header.appendChild(date);
+          appCard.appendChild(header);
+
+          const category = document.createElement("div");
+          category.className = "tlAppCategory";
+          category.innerHTML = '<span class="legendDot" style="background:' + catColor[app.category] + '"></span>' + app.category;
+          appCard.appendChild(category);
+
+          const capsWrap = document.createElement("div");
+          capsWrap.className = "tlAppCaps";
+          const caps = (app.capabilities || []);
+          const showCaps = (caps.length === 0) ? ["None"] : caps;
+          const maxChips = 5;
+          const shown = showCaps.slice(0, maxChips);
+          const extra = showCaps.length - shown.length;
+
+          shown.forEach(c => {
+            const tag = document.createElement("span");
+            tag.className = "tlCapTag";
+            tag.textContent = (c === "None" ? "No capabilities" : c);
+            capsWrap.appendChild(tag);
+          });
+          if (extra > 0){
+            const tag = document.createElement("span");
+            tag.className = "tlCapTag";
+            tag.textContent = `+${extra}`;
+            capsWrap.appendChild(tag);
+          }
+
+          appCard.appendChild(capsWrap);
+
+          appCard.addEventListener("click", () => openModal(app.name));
+          appCard.addEventListener("keydown", (e) => { 
+            if (e.key === "Enter" || e.key === " ") { 
+              e.preventDefault(); 
+              openModal(app.name); 
+            } 
+          });
+
+          appsGrid.appendChild(appCard);
+        }
+
+        timelineContainer.appendChild(appsGrid);
+      }
+    }
+  }
+
+  if (timelineSearch){
+    timelineSearch.addEventListener("input", () => { 
+      if (!timelineView.hidden) renderTimeline(); 
+    });
+  }
+  // ---------------------------------------------------------
+
+
+  function exportVisibleCSV(){
+    const query = normalize(q.value);
+    const capSet = capMS.getSelected();
+    const catSet = catMS.getSelected();
+    const capAll = (capSet.size === 0);
+    const catAll = (catSet.size === 0);
+
+    const visible = [];
+    for (const app of apps){
+      if (!catAll && !catSet.has(app.category)) continue;
+      if (openaiToggle.checked && app.developer !== 'OpenAI') continue;
+      if (!normalize(app.name).includes(query)) continue;
+      if (!capAll){
+        const caps = new Set(app.capabilities || []);
+        let ok = false;
+        for (const c of capSet){ if (caps.has(c)) { ok = true; break; } }
+        if (!ok) continue;
+      }
+      visible.push(app);
+    }
+
+    const lines = ["App,Category,Capabilities,Developer"];
+    for (const a of visible){
+      const escapeCSV = (str) => '"' + String(str || '').replaceAll('"','""') + '"';
+      const name = escapeCSV(a.name);
+      const category = escapeCSV(a.category);
+      const caps = escapeCSV((a.capabilities || []).join("; "));
+      const dev = escapeCSV(a.developer || "Unknown");
+      lines.push([name, category, caps, dev].join(","));
+    }
+
+    const blob = new Blob([lines.join("\n")], {type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "chatgpt_apps_visible.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function resetAll(){
+    q.value = "";
+    capMS.clear();
+    catMS.clear();
+    openaiToggle.checked = false;
+    listOpenaiToggle.checked = false;
+    timelineOpenaiToggle.checked = false;
+applyFilters();
+  }
+  buildMatrix();
+  applyFilters();
+
+  q.addEventListener("input", ()=>{
+    if (q.value.trim().length > 0 && !focusUserOverride) focusToggle.checked = true;
+    applyFilters();
+  });
+capFilterEl.addEventListener("mschange", applyFilters);
+  catFilterEl.addEventListener("mschange", applyFilters);
+focusToggle.addEventListener("change", ()=>{ focusUserOverride = true; applyFilters(); });
+
+// Each OpenAI filter checkbox works independently and triggers view refresh
+openaiToggle.addEventListener("change", applyFilters);
+listOpenaiToggle.addEventListener("change", renderList);
+timelineOpenaiToggle.addEventListener("change", renderTimeline);
+
+resetBtn.addEventListener("click", resetAll);
+  exportBtn.addEventListener("click", exportVisibleCSV);
+
+  closeModal.addEventListener("click", ()=>modal.close());
+  modal.addEventListener("click", (e)=>{
+    const rect = modal.getBoundingClientRect();
+    const inside = e.clientX>=rect.left && e.clientX<=rect.right && e.clientY>=rect.top && e.clientY<=rect.bottom;
+    if (!inside) modal.close();
+  });
+  document.addEventListener("keydown", (e)=>{ if (e.key==="Escape" && modal.open) modal.close(); });
+</script>
+
+<div id="helpModal" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  z-index:2000;
+">
+  <div style="
+    max-width:900px;
+    margin:6vh auto;
+    background:white;
+    border-radius:16px;
+    padding:28px;
+    max-height:85vh;
+    overflow:auto;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+  ">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2 style="margin:0;">📘 Dashboard Help</h2>
+      <button id="closeHelp" style="
+        border:none;
+        background:#eee;
+        padding:6px 10px;
+        border-radius:8px;
+        cursor:pointer;
+        font-weight:600;
+      ">✕</button>
+    </div>
+    <hr/>
+
+<div style="line-height:1.65;font-size:14px;">
+  <h2>ChatGPT Apps — Category × Capability Dashboard</h2>
+
+  <h3>Overview</h3>
+  <p>
+    This dashboard provides a structured, explorable view of ChatGPT-connected applications,
+    organized by categories and capabilities.
+  </p>
+
+  <ul>
+    <li><b>Categories</b> (e.g. Design, Productivity, Business)</li>
+    <li><b>Capabilities</b> (e.g. Interactive(API), Writes(API), File Search(MCP), Sync)</li>
+  </ul>
+
+  <p>It helps users quickly answer questions like:</p>
+  <ul>
+    <li>Which apps support Interactive APIs?</li>
+    <li>What design tools support file search?</li>
+    <li>Which apps match a specific capability combination?</li>
+  </ul>
+
+  <p>The dashboard supports three complementary views:</p>
+  <ul>
+    <li><b>Matrix View</b> — high-level comparison</li>
+    <li><b>List View</b> — detailed, filterable results</li>
+    <li><b>Timeline View</b> — chronological exploration</li>
+  </ul>
+
+  <h3>Data Model</h3>
+  <ul>
+    <li>App name</li>
+    <li>Category (single)</li>
+    <li>Capabilities (one or more)</li>
+  </ul>
+
+  <h3>Matrix View (Overview)</h3>
+  <p><b>Purpose:</b> Visual comparison across categories and capabilities.</p>
+  <ul>
+    <li>Columns → Categories</li>
+    <li>Rows → Capabilities</li>
+    <li>Cells → Apps matching category and capability</li>
+    <li>Heatmap shading → Darker cells indicate more apps</li>
+  </ul>
+
+  <p><b>Interactions</b></p>
+  <ul>
+    <li>Click a cell to see apps inside it</li>
+    <li>Filter visible rows or columns</li>
+    <li>Export visible apps as CSV</li>
+  </ul>
+
+  <h3>List View (Search & Discovery)</h3>
+  <p><b>Purpose:</b> Precise filtering and app discovery.</p>
+  <ul>
+    <li>Scrollable list of apps</li>
+    <li>Shows app name, category, and capability chips</li>
+  </ul>
+
+  <h3>Timeline View (Chronological Exploration)</h3>
+  <p><b>Purpose:</b> Explore apps organized by their release date.</p>
+  <ul>
+    <li>Apps grouped by year and month (newest first)</li>
+    <li>Visual timeline layout with year badges and month labels</li>
+    <li>Responsive grid showing app cards with release dates</li>
+    <li>Each card displays: app name, release date, category, and capabilities</li>
+    <li>Search box to filter apps by name or category</li>
+    <li>Great for tracking the evolution of the ChatGPT apps ecosystem</li>
+  </ul>
+
+  <p><b>Interactions</b></p>
+  <ul>
+    <li>Click any app card to view full details</li>
+    <li>Use search to find specific apps by name or category</li>
+    <li>Scroll through the timeline to explore apps across different time periods</li>
+  </ul>
+
+  <h3>Capability Query Builder</h3>
+  <p>
+    Filter apps using natural language or manual selectors.
+  </p>
+
+  <p><b>Examples:</b></p>
+  <ul>
+    <li>interactive</li>
+    <li>interactive and writes</li>
+    <li>sync but no file search</li>
+    <li>interactive api but no writes</li>
+  </ul>
+
+  <p>
+    The parser is case-insensitive and ignores spaces and punctuation
+    (<code>interactive(api)</code> = <code>interactive api</code>).
+  </p>
+
+  <h4>Apply Button</h4>
+  <ul>
+    <li>Parses the text query (if present)</li>
+    <li>Applies the resulting filters</li>
+  </ul>
+
+  <h4>Clear Button</h4>
+  <ul>
+    <li>Resets text query</li>
+    <li>Clears include/exclude capabilities</li>
+    <li>Resets list results</li>
+  </ul>
+
+  <h4>Include Capabilities (AND)</h4>
+  <p>Apps must have all selected capabilities.</p>
+
+  <h4>Exclude Capabilities</h4>
+  <p>Apps must have none of the selected capabilities.</p>
+
+  <h3>Result Controls</h3>
+  <ul>
+    <li><b>Result count</b> shows matching apps</li>
+    <li><b>Search within results</b> filters by name, category, or notes</li>
+  </ul>
+
+  <h3>Export</h3>
+  <p>
+    Export visible apps (CSV) based on current filters and view.
+  </p>
+
+  <h3>Typical Use Cases</h3>
+  <ul>
+    <li>🔍 Find compatible apps</li>
+    <li>🧭 Explore categories</li>
+    <li>📊 Gap analysis</li>
+    <li>📁 Reporting</li>
+  </ul>
+
+  <h3>Tips & Best Practices</h3>
+  <ul>
+    <li>Use Matrix view for discovery</li>
+    <li>Use List view for precision</li>
+    <li>Use Timeline view for chronological exploration</li>
+    <li>Combine Include + Exclude filters</li>
+    <li>Export after filtering</li>
+  </ul>
+
+  <h3>Known Limitations</h3>
+  <ul>
+    <li>Categories are single-valued per app</li>
+    <li>Capability matching is exact</li>
+    <li>Free-text search does not override capability filters</li>
+  </ul>
+</div>
+</div>
+  </div>
+</div>
+
+
+<script>
+  const helpBtn = document.getElementById("helpBtn");
+  const helpModal = document.getElementById("helpModal");
+  const closeHelp = document.getElementById("closeHelp");
+
+  helpBtn.addEventListener("click", () => helpModal.style.display = "block");
+  closeHelp.addEventListener("click", () => helpModal.style.display = "none");
+  helpModal.addEventListener("click", e => {
+    if (e.target === helpModal) helpModal.style.display = "none";
+  });
+</script>
+
+</body>
+</html>
