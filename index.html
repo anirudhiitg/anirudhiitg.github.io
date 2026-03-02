@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Green Habit Farm — Homemade Moringa Powder & Amla Powder, grown and crafted with care. Pure, natural, and farm-fresh." />
+  <meta name="keywords" content="moringa powder, amla powder, homemade, farm fresh, organic, healthy, superfood" />
+  <meta property="og:title" content="The Green Habit Farm" />
+  <meta property="og:description" content="Pure homemade Moringa & Amla powder, grown at our farm." />
+  <title>The Green Habit Farm — Pure Moringa & Amla Powder</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --font-head: 'Lora', Georgia, serif;
+      --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===========================
+       NAVIGATION
+       =========================== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo" aria-label="The Green Habit Farm">
+        <div class="nav-logo-icon">🌿</div>
+        <div class="nav-logo-text">
+          The Green Habit Farm
+          <span>Pure · Natural · Homegrown</span>
+        </div>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="#products">Products</a></li>
+        <li><a href="#habits">Healthy Habits</a></li>
+        <li><a href="#process">How It's Made</a></li>
+        <li><a href="#about">About</a></li>
+        <li>
+          <a href="#products" class="btn btn-primary nav-cta" data-order="general">Order Now</a>
+        </li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===========================
+       HERO
+       =========================== -->
+  <section class="hero" id="home" aria-label="Hero">
+    <div class="hero-inner">
+      <!-- Left: Copy -->
+      <div class="hero-copy">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Grown &amp; made in-house · Hanumangarh, Rajasthan
+        </div>
+        <h1 class="hero-title">
+          Farm-grown.<br>
+          <em>In-house made.</em>
+        </h1>
+        <p class="hero-desc">
+          Pure Moringa and Amla powder from our farm in Hanumangarh, Rajasthan — grown by us, processed by us, packed by us. No middlemen, no factories.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-order="general">
+            🛒 Shop Products
+          </button>
+          <a href="#habits" class="btn btn-outline">Our Healthy Habits</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Natural</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">0</div>
+            <div class="stat-label">Additives</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">Farm</div>
+            <div class="stat-label">to Your Door</div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Visual cards -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-card-main">
+          <div class="product-icon">🌿</div>
+          <h3>Moringa Powder</h3>
+          <p>Grown on our Hanumangarh farm and ground in-house. Rich in protein, iron, and vitamins — try it with curd for a powerful plant-protein boost.</p>
+        </div>
+        <div class="hero-cards-row">
+          <div class="hero-card-sm">
+            <div class="icon">🫙</div>
+            <p>Sun-dried &amp; stone-ground</p>
+          </div>
+          <div class="hero-card-sm">
+            <div class="icon">🌱</div>
+            <p>Grown in our kitchen garden</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       PRODUCTS
+       =========================== -->
+  <section class="section products" id="products" aria-label="Products">
+    <div class="container">
+      <div class="products-header">
+        <div class="section-label">Our Products</div>
+        <h2 class="section-title">Made at the farm, just for you</h2>
+        <p class="section-sub">
+          Grown on our farm in Hanumangarh, Rajasthan and processed in-house — no commercial middlemen, no fillers, just pure goodness.
+        </p>
+      </div>
+      <div class="products-grid">
+
+        <!-- Moringa Powder -->
+        <article class="product-card">
+          <div class="product-image moringa">
+            <span class="product-emoji">🌿</span>
+            <span class="product-badge-float">Best Seller</span>
+          </div>
+          <div class="product-body">
+            <h3>Moringa Powder</h3>
+            <p class="desc">
+              Dried from fresh Moringa leaves grown at our farm and ground into a fine, bright-green powder.
+              A complete plant protein packed with amino acids, iron, calcium, and antioxidants.
+            </p>
+            <div class="product-benefits">
+              <span class="tag">High Protein</span>
+              <span class="tag">Rich in Iron</span>
+              <span class="tag">Antioxidants</span>
+              <span class="tag">Energy Boost</span>
+            </div>
+            <div class="product-actions">
+              <button class="btn btn-whatsapp" data-order="moringa">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Order on WhatsApp
+              </button>
+              <a href="#about" class="btn btn-outline" style="padding:14px 20px;">Learn more</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Amla Powder -->
+        <article class="product-card">
+          <div class="product-image amla">
+            <span class="product-emoji">🍋</span>
+            <span class="product-badge-float">Fan Favourite</span>
+          </div>
+          <div class="product-body">
+            <h3>Amla Powder</h3>
+            <p class="desc">
+              Made from sun-dried Indian gooseberries (Amla) sourced and processed at our farm.
+              One of nature's richest sources of Vitamin C — excellent for immunity, skin, and hair health.
+            </p>
+            <div class="product-benefits">
+              <span class="tag">Vitamin C Boost</span>
+              <span class="tag">Immunity</span>
+              <span class="tag">Skin &amp; Hair</span>
+              <span class="tag">Gut Health</span>
+            </div>
+            <div class="product-actions">
+              <button class="btn btn-whatsapp" data-order="amla">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Order on WhatsApp
+              </button>
+              <a href="#about" class="btn btn-outline" style="padding:14px 20px;">Learn more</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       HEALTHY HABITS
+       =========================== -->
+  <section class="section habits" id="habits" aria-label="Healthy Habits">
+    <div class="container">
+      <div class="habits-header">
+        <div class="section-label">Healthy Habits</div>
+        <h2 class="section-title">We walk the talk</h2>
+        <p class="section-sub">
+          We don't just sell these powders — we live by them. Here are the daily habits that keep us healthy and grounded.
+        </p>
+      </div>
+
+      <!-- 3 core habits -->
+      <div class="habits-grid">
+        <article class="habit-card">
+          <div class="habit-icon">💪</div>
+          <h3>Moringa + Curd = Plant Protein</h3>
+          <p>
+            Every morning, a bowl of fresh curd with a spoon of Moringa powder. It's our go-to plant-based protein hit — creamy, nutritious, and takes 30 seconds.
+          </p>
+        </article>
+        <article class="habit-card">
+          <div class="habit-icon">🌱</div>
+          <h3>Kitchen Garden at Home</h3>
+          <p>
+            Alongside the farm, we maintain a kitchen garden at home — growing vegetables and herbs for daily cooking. It's a habit that keeps you connected to your food.
+          </p>
+        </article>
+        <article class="habit-card">
+          <div class="habit-icon">🍳</div>
+          <h3>Cooking Everything at Home</h3>
+          <p>
+            Real ingredients, real cooking. No packaged shortcuts. Home cooking isn't just healthier — it's how we stay connected to what we put in our bodies.
+          </p>
+        </article>
+      </div>
+
+      <!-- Updates: Videos & Blogs feed -->
+      <div>
+        <div class="updates-head">
+          <h3>Videos &amp; Blogs</h3>
+          <a href="#habits" class="btn btn-outline" style="padding:10px 20px; font-size:0.85rem;">View All</a>
+        </div>
+        <div class="updates-grid">
+
+          <!-- Sample update cards — replace with real content -->
+          <article class="update-card">
+            <div class="update-thumb" style="background: linear-gradient(135deg, #EAF4EC, #C8E6C9);">
+              🥣
+              <span class="update-type-badge type-video">VIDEO</span>
+              <div class="play-overlay">▶</div>
+            </div>
+            <div class="update-body">
+              <h4>My morning Moringa + Curd protein bowl (60 seconds)</h4>
+              <div class="update-meta">
+                <span>🕐 1 min watch</span>
+                <span>Moringa Tips</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="update-card">
+            <div class="update-thumb" style="background: linear-gradient(135deg, #FDF3D7, #FFE082);">
+              🌿
+              <span class="update-type-badge type-blog">BLOG</span>
+            </div>
+            <div class="update-body">
+              <h4>Why I started growing Moringa in my kitchen garden</h4>
+              <div class="update-meta">
+                <span>📖 4 min read</span>
+                <span>Kitchen Garden</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="update-card">
+            <div class="update-thumb" style="background: linear-gradient(135deg, #FDE8E8, #FFCCBC);">
+              🍳
+              <span class="update-type-badge type-video">VIDEO</span>
+              <div class="play-overlay">▶</div>
+            </div>
+            <div class="update-body">
+              <h4>3 simple home-cooked meals with Amla powder</h4>
+              <div class="update-meta">
+                <span>🕐 5 min watch</span>
+                <span>Home Cooking</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       HOW IT'S MADE
+       =========================== -->
+  <section class="section process" id="process" aria-label="How it's made">
+    <div class="container">
+      <div class="process-inner">
+        <div>
+          <div class="section-label">How It's Made</div>
+          <h2 class="section-title">From our Hanumangarh farm to your kitchen</h2>
+          <p class="section-sub">Everything happens at our farm in Hanumangarh, Rajasthan — growing, drying, grinding, and packing. No outsourcing, no middlemen.</p>
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h4>Grown at our Hanumangarh farm</h4>
+                <p>Moringa trees and Amla plants cultivated on our own land in Hanumangarh, Rajasthan — naturally, without pesticides.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h4>Hand-picked at peak freshness</h4>
+                <p>Leaves and fruits picked at optimal maturity to lock in maximum nutrients.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h4>Sun-dried slowly</h4>
+                <p>Dried in shade or mild sun at the farm to preserve colour, aroma, and nutritional value.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <h4>Ground &amp; packed in-house</h4>
+                <p>Finely powdered and packed right at the farm in small batches — no external processing facility, no warehousing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="process-visual" aria-hidden="true">
+          <div class="big-icon">🌿</div>
+          <h3>Hanumangarh, Rajasthan</h3>
+          <p>
+            Our farm is based in Hanumangarh, Rajasthan. Every jar of Moringa and Amla powder you receive was grown, processed, and packed right here — by the same hands that tend the farm.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       ABOUT
+       =========================== -->
+  <section class="section about" id="about" aria-label="About">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-visual" aria-hidden="true">
+          <div class="about-avatar">🧑‍🌾</div>
+          <h3>The Green Habit Farm</h3>
+          <p>Hanumangarh, Rajasthan</p>
+          <div class="about-values">
+            <div class="value-item"><span class="v-icon">📍</span> Farm in Hanumangarh, Rajasthan</div>
+            <div class="value-item"><span class="v-icon">🌿</span> Moringa &amp; Amla grown in-house</div>
+            <div class="value-item"><span class="v-icon">🫙</span> Powdered &amp; packed at the farm</div>
+            <div class="value-item"><span class="v-icon">🤝</span> Direct from farm to you</div>
+          </div>
+        </div>
+        <div class="about-text">
+          <div class="section-label">Our Story</div>
+          <h2 class="section-title">A farm in Hanumangarh, a habit for life</h2>
+          <blockquote>
+            "We grow it, we make it, we use it every day — and now we want to share it with you."
+          </blockquote>
+          <p>
+            We have a farm in Hanumangarh, Rajasthan where we grow Moringa and Amla. The powder is made entirely in-house — from harvesting to drying to grinding to packing. No outsourcing, no commercial processing.
+          </p>
+          <p>
+            But the farm is only half the story. We genuinely live by what we grow. Moringa powder with curd is our daily protein. A kitchen garden at home keeps us connected to fresh produce. And cooking everything from scratch is the habit that ties it all together.
+          </p>
+          <p>
+            We started The Green Habit Farm to share both — the pure products we make, and the simple habits that make a real difference. Because good health isn't a product. It's a practice.
+          </p>
+          <button class="btn btn-primary" data-order="general" style="margin-top:8px;">
+            🌿 Order Your First Jar
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       ORDER CTA
+       =========================== -->
+  <section class="order-cta" aria-label="Order now">
+    <div class="container">
+      <h2>Ready to start your green habit?</h2>
+      <p>Order directly on WhatsApp — we'll get back to you with fresh-batch availability and pricing.</p>
+      <button class="btn btn-whatsapp" data-order="general" style="font-size:1rem; padding:16px 36px;">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Order on WhatsApp
+      </button>
+      <p style="margin-top:16px; opacity:0.75; font-size:0.88rem;">
+        WhatsApp not working? Call or SMS us directly:<br>
+        <a href="tel:+919401609262" style="color:white; font-weight:600; text-decoration:underline;">+91 94016 09262</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===========================
+       FOOTER
+       =========================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon">🌿</div>
+          <div class="nav-logo-text">
+            The Green Habit Farm
+            <span>Pure · Natural · Homegrown</span>
+          </div>
+        </div>
+        <p>Moringa and Amla grown at our farm in Hanumangarh, Rajasthan — processed and packed in-house. No middlemen, no additives, no shortcuts.</p>
+      </div>
+      <nav class="footer-col" aria-label="Products">
+        <h4>Products</h4>
+        <ul role="list">
+          <li><a href="#products">Moringa Powder</a></li>
+          <li><a href="#products">Amla Powder</a></li>
+          <li><a href="#process">How It's Made</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Explore">
+        <h4>Explore</h4>
+        <ul role="list">
+          <li><a href="#habits">Healthy Habits</a></li>
+          <li><a href="#habits">Videos &amp; Blogs</a></li>
+          <li><a href="#about">Our Story</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Contact">
+        <h4>Contact</h4>
+        <ul role="list">
+          <li><a href="tel:+919401609262">📞 +91 94016 09262</a></li>
+          <li><a href="https://wa.me/919401609262?text=Hi!%20I%27d%20like%20to%20order%20from%20The%20Green%20Habit%20Farm.">💬 WhatsApp Us</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 The Green Habit Farm. All rights reserved.</span>
+      <span>Made with 🌿 at the farm.</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
