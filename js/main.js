@@ -56,9 +56,9 @@ const WHATSAPP_NUMBER = '+919401609262';
 
 function orderOnWhatsApp(product) {
   const messages = {
-    moringa: "Hi! I'd like to order *Moringa Powder* from The Green Habit Farm. Please share availability and pricing. 🌿",
-    amla: "Hi! I'd like to order *Amla Powder* from The Green Habit Farm. Please share availability and pricing. 🍋",
-    general: "Hi! I'd like to place an order from The Green Habit Farm. Could you share your available products and pricing? 🌱"
+    moringa: "Hi! I'd like to order *Moringa Powder* from Premnagar Farms. Please share availability and pricing. 🌿",
+    amla: "Hi! I'd like to order *Amla Powder* from Premnagar Farms. Please share availability and pricing. 🍋",
+    general: "Hi! I'd like to place an order from Premnagar Farms. Could you share your available products and pricing? 🌱"
   };
   const msg = encodeURIComponent(messages[product] || messages.general);
   window.open(`https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g,'')}?text=${msg}`, '_blank');
