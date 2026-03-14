@@ -84,11 +84,17 @@ ul { list-style: none; }
 }
 .btn-primary:hover { background: var(--green-mid); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
 .btn-outline {
-  background: transparent;
+  background: var(--white);
   color: var(--green-dark);
   border: 2px solid var(--green-dark);
 }
 .btn-outline:hover { background: var(--green-dark); color: var(--white); }
+.btn-outline-white {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid rgba(255,255,255,0.7);
+}
+.btn-outline-white:hover { background: var(--white); color: var(--green-dark); }
 .btn-whatsapp {
   background: #25D366;
   color: var(--white);
