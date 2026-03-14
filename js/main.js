@@ -58,6 +58,7 @@ function orderOnWhatsApp(product) {
   const messages = {
     moringa: "Hi! I'd like to order *Moringa Powder* from Premnagar Farms. Please share availability and pricing. 🌿",
     amla: "Hi! I'd like to order *Amla Powder* from Premnagar Farms. Please share availability and pricing. 🍋",
+    retreat: "Hi! I'm interested in visiting Premnagar Farms for a farm stay. Could you share more details? 🏡",
     general: "Hi! I'd like to place an order from Premnagar Farms. Could you share your available products and pricing? 🌱"
   };
   const msg = encodeURIComponent(messages[product] || messages.general);
