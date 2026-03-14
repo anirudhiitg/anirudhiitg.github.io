@@ -303,7 +303,17 @@ ul { list-style: none; }
 }
 .product-image.moringa { background: linear-gradient(135deg, #EAF4EC, #C8E6C9); }
 .product-image.amla { background: linear-gradient(135deg, #FDF3D7, #FFE082); }
-.product-emoji { font-size: 5rem; }
+.product-emoji { display: flex; align-items: center; justify-content: center; }
+.product-svg {
+  width: 140px;
+  height: 160px;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.12));
+  transition: transform 0.4s ease;
+}
+.product-card:hover .product-svg { transform: translateY(-6px) scale(1.04); }
+.product-icon svg {
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));
+}
 .product-badge-float {
   position: absolute;
   top: 20px; right: 20px;
