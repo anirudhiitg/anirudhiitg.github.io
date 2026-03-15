@@ -56,10 +56,10 @@ const WHATSAPP_NUMBER = '+919401609262';
 
 function orderOnWhatsApp(product) {
   const messages = {
-    moringa: "Hi! I'd like to order *Moringa Powder* from Bigha Farms. Please share availability and pricing. 🌿",
-    amla: "Hi! I'd like to order *Amla Powder* from Bigha Farms. Please share availability and pricing. 🍋",
-    retreat: "Hi! I'm interested in visiting Bigha Farms for a farm stay. Could you share more details? 🏡",
-    general: "Hi! I'd like to place an order from Bigha Farms. Could you share your available products and pricing? 🌱"
+    moringa: "Hi! I'd like to order *Moringa Powder* from Desi Bigha. Please share availability and pricing. 🌿",
+    amla: "Hi! I'd like to order *Amla Powder* from Desi Bigha. Please share availability and pricing. 🍋",
+    retreat: "Hi! I'm interested in visiting Desi Bigha for a farm stay. Could you share more details? 🏡",
+    general: "Hi! I'd like to place an order from Desi Bigha. Could you share your available products and pricing? 🌱"
   };
   const msg = encodeURIComponent(messages[product] || messages.general);
   window.open(`https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g,'')}?text=${msg}`, '_blank');
