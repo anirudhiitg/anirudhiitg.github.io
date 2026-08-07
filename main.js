@@ -269,10 +269,49 @@
     });
   }
 
+  // ── FAQ Accordion ─────────────────────────────────────────
+  function wireFAQAccordion() {
+    var triggers = document.querySelectorAll(".faq-trigger");
+    triggers.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var item = btn.parentElement;
+        var content = item.querySelector(".faq-content");
+        var icon = btn.querySelector(".faq-icon");
+        var isExpanded = btn.getAttribute("aria-expanded") === "true";
+
+        // Close other accordion items
+        document.querySelectorAll(".faq-item").forEach(function (otherItem) {
+          if (otherItem !== item) {
+            var otherBtn = otherItem.querySelector(".faq-trigger");
+            var otherContent = otherItem.querySelector(".faq-content");
+            var otherIcon = otherItem.querySelector(".faq-icon");
+            if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+            if (otherContent) otherContent.style.maxHeight = null;
+            if (otherIcon) otherIcon.textContent = "+";
+            otherItem.classList.remove("active");
+          }
+        });
+
+        if (isExpanded) {
+          btn.setAttribute("aria-expanded", "false");
+          content.style.maxHeight = null;
+          if (icon) icon.textContent = "+";
+          item.classList.remove("active");
+        } else {
+          btn.setAttribute("aria-expanded", "true");
+          content.style.maxHeight = content.scrollHeight + "px";
+          if (icon) icon.textContent = "−";
+          item.classList.add("active");
+        }
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     fillBrand();
     wireWhatsApp();
     wireContactForm();
+    wireFAQAccordion();
     renderStoryList(document.getElementById("featured-stories"), 2);
     renderStoryList(document.getElementById("all-stories"), 0);
     renderProductGrid(document.getElementById("product-grid"));
