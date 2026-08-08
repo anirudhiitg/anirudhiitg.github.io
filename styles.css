@@ -515,6 +515,98 @@ a { color: var(--leaf); }
 .fab:hover { transform: scale(1.08); }
 .fab svg { width: 30px; height: 30px; fill: #fff; }
 
+/* ── Testimonials Specific Styling ── */
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.testimonial-card .stars {
+  color: #ffb800;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+.testimonial-card .testimonial-text {
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+.testimonial-card .testimonial-author {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.testimonial-card .testimonial-author strong {
+  color: var(--leaf-dark);
+  font-size: 0.95rem;
+}
+.testimonial-card .testimonial-author span {
+  font-size: 0.8rem;
+  color: var(--earth);
+  font-weight: 600;
+}
+
+/* ── FAQ Accordion Specific Styling ── */
+.faq-accordion {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.faq-item.active {
+  border-color: var(--leaf);
+}
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 20px 24px;
+  text-align: left;
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--leaf-dark);
+  cursor: pointer;
+  outline: none;
+  transition: color 0.2s ease;
+}
+.faq-trigger:hover {
+  color: var(--leaf);
+}
+.faq-trigger .faq-icon {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 1.4rem;
+  color: var(--earth);
+  line-height: 1;
+  margin-left: 16px;
+  transition: transform 0.2s ease;
+}
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.faq-content p {
+  padding: 0 24px 22px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
 .empty {
   text-align: center;
   color: var(--ink-soft);
